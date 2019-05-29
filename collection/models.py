@@ -43,7 +43,7 @@ class Item(models.Model):
 class CollectionPoint(models.Model):
     items = models.ManyToManyField(to=Item)
     name = models.CharField(max_length=20)
-    address = models.CharField(max_length=100)
+    address = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
         return self.name

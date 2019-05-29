@@ -1,8 +1,14 @@
 from rest_framework import serializers
-from .models import Vehicle
+from .models import Vehicle, CollectionPoint
 
 
 class VehicleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Vehicle
         fields = ['registration_number', 'model', 'x', 'y']
+
+
+class CollectionPointSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CollectionPoint
+        fields = ['items', 'name', 'address']
