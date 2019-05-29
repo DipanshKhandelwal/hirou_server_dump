@@ -4,9 +4,9 @@ from django.utils import timezone
 
 
 class Vehicle(models.Model):
-    x = models.FloatField(blank=True)
-    y = models.FloatField(blank=True)
-    registration_number = models.CharField(max_length=15)
+    x = models.FloatField(blank=True, null=True)
+    y = models.FloatField(blank=True, null=True)
+    registration_number = models.CharField(max_length=15, unique=True)
     model = models.CharField(max_length=20, blank=True)
 
     def __str__(self):
