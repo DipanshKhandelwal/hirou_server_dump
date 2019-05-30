@@ -1,5 +1,11 @@
 from rest_framework import serializers
-from .models import Vehicle, CollectionPoint
+from .models import Vehicle, CollectionPoint, Item, Area
+
+
+class ItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Item
+        fields = ['name', 'description']
 
 
 class VehicleSerializer(serializers.ModelSerializer):
@@ -12,3 +18,9 @@ class CollectionPointSerializer(serializers.ModelSerializer):
     class Meta:
         model = CollectionPoint
         fields = ['items', 'name', 'address']
+
+
+class AreaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Area
+        fields = ['name', 'description']
