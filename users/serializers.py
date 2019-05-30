@@ -3,20 +3,24 @@ from rest_auth.registration.serializers import RegisterSerializer
 from rest_framework import serializers
 # from rest_framework.authtoken.models import Token
 from django.core.validators import RegexValidator
+from collection.serializers import VehicleSerializer
 
 from .models import User, Profile
-
-
-class ProfileSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Profile
-        fields = ['user', 'gender', 'dob', 'bio']
 
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('email', 'username', 'password', 'phone_number')
+        fields = ('email', 'username', 'phone_number', 'first_name', 'last_name')
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    vehicle = VehicleSerializer(read_only=True)
+
+    class Meta:
+        model = Profile
+        fields = ['user', 'gender', 'dob', 'bio', 'vehicle']
 
 
 class CustomRegisterSerializer(RegisterSerializer):
