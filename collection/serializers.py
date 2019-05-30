@@ -15,6 +15,8 @@ class VehicleSerializer(serializers.ModelSerializer):
 
 
 class CollectionPointSerializer(serializers.ModelSerializer):
+    items = ItemSerializer(many=True, read_only=True)
+
     class Meta:
         model = CollectionPoint
         fields = ['items', 'name', 'address']
