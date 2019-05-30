@@ -9,8 +9,8 @@ class VehicleAdmin(admin.ModelAdmin):
 
 
 class PickupAdmin(admin.ModelAdmin):
-    list_display = ['timestamp', 'area', 'vehicle']
-    ordering = ['timestamp', 'area', 'vehicle']
+    list_display = ['timestamp', 'vehicle']
+    ordering = ['timestamp', 'vehicle']
 
 
 class CollectionPointAdmin(admin.ModelAdmin):

@@ -12,25 +12,6 @@ class Vehicle(models.Model):
         return self.registration_number + " - " + self.model
 
 
-class Area(models.Model):
-    description = models.CharField(max_length=100, blank=True)
-    name = models.CharField(max_length=20)
-
-    def __str__(self):
-        return self.name
-
-
-class Pickup(models.Model):
-    vehicle = models.ForeignKey(to=Vehicle, on_delete=None)
-    users = models.ManyToManyField(to=User)
-    timestamp = models.DateTimeField(default=timezone.now)
-    image = models.FileField(blank=True, null=True)
-    area = models.ForeignKey(to=Area, on_delete=None, null=True)
-
-    def __str__(self):
-        return str(self.timestamp)
-
-
 class Item(models.Model):
     name = models.CharField(max_length=10)
     description = models.CharField(max_length=50, blank=True)
@@ -39,10 +20,30 @@ class Item(models.Model):
         return self.name
 
 
-class CollectionPoint(models.Model):
-    items = models.ManyToManyField(to=Item)
+class Area(models.Model):
     name = models.CharField(max_length=20)
-    address = models.CharField(max_length=100, blank=True)
+    description = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
         return self.name
+
+
+class CollectionPoint(models.Model):
+    location = PlainLocationField(based_fields=['city'], zoom=7, null=True)  # remove null=True
+    name = models.CharField(max_length=20)
+    address = models.CharField(max_length=100, blank=True)
+    area = models.ForeignKey(to=Area, on_delete=None, null=True)  # remove null=True
+
+    def __str__(self):
+        return self.name
+
+
+class Pickup(models.Model):
+    collection_point = models.ForeignKey(to=CollectionPoint, on_delete=None, null=True)  # remove null=True
+    vehicle = models.ForeignKey(to=Vehicle, on_delete=None)
+    timestamp = models.DateTimeField(default=timezone.now)
+    image = models.FileField(blank=True, null=True)
+    items = models.ManyToManyField(to=Item)
+
+    def __str__(self):
+        return str(self.timestamp)
