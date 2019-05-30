@@ -5,7 +5,7 @@ from .models import Vehicle, CollectionPoint
 class VehicleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Vehicle
-        fields = ['registration_number', 'model', 'x', 'y']
+        fields = ['registration_number', 'model', 'location']
 
 
 class CollectionPointSerializer(serializers.ModelSerializer):

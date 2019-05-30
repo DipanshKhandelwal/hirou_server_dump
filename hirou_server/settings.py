@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'rest_auth.registration',
     'rest_framework',
     'rest_framework.authtoken',
+    'location_field.apps.DefaultConfig',
 
     'users',
     'collection',

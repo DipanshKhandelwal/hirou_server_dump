@@ -1,11 +1,10 @@
 from django.db import models
-from users.models import User
 from django.utils import timezone
+from location_field.models.plain import PlainLocationField
 
 
 class Vehicle(models.Model):
-    x = models.FloatField(blank=True, null=True)
-    y = models.FloatField(blank=True, null=True)
+    location = PlainLocationField(based_fields=['city'], zoom=7, null=True)
     registration_number = models.CharField(max_length=15, unique=True)
     model = models.CharField(max_length=20, blank=True)
 

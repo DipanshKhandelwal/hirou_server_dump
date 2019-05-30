@@ -1,11 +1,11 @@
 from django.contrib import admin
-from .models import Vehicle, Item, User, Area, CollectionPoint, Pickup
+from .models import Vehicle, Item, Area, CollectionPoint, Pickup
 
 
 class VehicleAdmin(admin.ModelAdmin):
     list_display = ['registration_number', 'model']
     ordering = ['registration_number', 'model']
-    fields = ['registration_number', 'model', ('x', 'y')]
+    fields = ['registration_number', 'location', 'model']
 
 
 class PickupAdmin(admin.ModelAdmin):
@@ -19,7 +19,7 @@ class CollectionPointAdmin(admin.ModelAdmin):
 
 
 admin.site.register(
-    [Item, User, Area],
+    [Item, Area]
 )
 
 admin.site.register(Vehicle, VehicleAdmin)
