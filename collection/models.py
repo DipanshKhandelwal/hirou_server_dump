@@ -15,15 +15,15 @@ class Vehicle(models.Model):
 
 
 class Item(models.Model):
-    name = models.CharField(max_length=10)
-    description = models.CharField(max_length=50, blank=True)
+    name = models.CharField(max_length=20, unique=True)
+    description = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
         return self.name
 
 
 class Area(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=20, unique=True)
     description = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
@@ -32,9 +32,9 @@ class Area(models.Model):
 
 class CollectionPoint(models.Model):
     location = PlainLocationField(based_fields=['city'], zoom=7, null=True)  # remove null=True
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=20, unique=True)
     address = models.CharField(max_length=100, blank=True)
-    area = models.ForeignKey(to=Area, on_delete=None, null=True)  # remove null=True
+    area = models.ForeignKey(to=Area, on_delete=None, null=True, blank=True)  # remove null=True
 
     def __str__(self):
         return self.name
