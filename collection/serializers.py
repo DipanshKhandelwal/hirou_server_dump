@@ -11,7 +11,7 @@ class ItemSerializer(serializers.ModelSerializer):
 class VehicleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Vehicle
-        fields = ['registration_number', 'model', 'location']
+        fields = ['id', 'registration_number', 'model', 'location', 'users']
 
 
 class CollectionPointSerializer(serializers.ModelSerializer):

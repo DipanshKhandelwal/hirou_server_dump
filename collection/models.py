@@ -1,12 +1,14 @@
 from django.db import models
 from django.utils import timezone
 from location_field.models.plain import PlainLocationField
+from users.models import User
 
 
 class Vehicle(models.Model):
     location = PlainLocationField(based_fields=['city'], zoom=7, null=True)
     registration_number = models.CharField(max_length=15, unique=True)
     model = models.CharField(max_length=20, blank=True)
+    users = models.ManyToManyField(to=User, null=True, blank=True)
 
     def __str__(self):
         return self.registration_number + " - " + self.model

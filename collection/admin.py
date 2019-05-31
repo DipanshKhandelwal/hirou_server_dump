@@ -5,7 +5,7 @@ from .models import Vehicle, Item, Area, CollectionPoint, Pickup
 class VehicleAdmin(admin.ModelAdmin):
     list_display = ['registration_number', 'model']
     ordering = ['registration_number', 'model']
-    fields = ['registration_number', 'location', 'model']
+    fields = ['registration_number', 'location', 'model', 'users']
 
 
 class PickupAdmin(admin.ModelAdmin):
