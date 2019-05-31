@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
-from collection.models import Vehicle
 
 
 class User(AbstractUser):
@@ -26,7 +25,6 @@ class Profile(models.Model):
     dob = models.DateTimeField(blank=True, null=True)
     bio = models.CharField(max_length=200, blank=True)
     image = models.FileField(blank=True, null=True)
-    vehicle = models.ForeignKey(to=Vehicle, on_delete=None, null=True, blank=True)
 
     def __str__(self):
         return self.user.username
