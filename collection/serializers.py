@@ -36,4 +36,5 @@ class CollectionPointSerializer(serializers.ModelSerializer):
 class PickupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Pickup
+        read_only_fields = ['id', 'timestamp', 'vehicle', 'users']
         fields = ['id', 'collection_point', 'timestamp', 'items', 'vehicle', 'users']

@@ -42,7 +42,7 @@ class CollectionPoint(models.Model):
 
 class Pickup(models.Model):
     collection_point = models.ForeignKey(to=CollectionPoint, on_delete=None, null=True, related_name='pickup')  # remove null=True
-    vehicle = models.ForeignKey(to=Vehicle, on_delete=None, related_name='pickup')
+    vehicle = models.ForeignKey(to=Vehicle, on_delete=None, related_name='pickup', null=True)
     timestamp = models.DateTimeField(default=timezone.now)
     image = models.FileField(blank=True, null=True)
     items = models.ManyToManyField(to=Item)

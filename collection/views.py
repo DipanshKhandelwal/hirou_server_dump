@@ -41,3 +41,12 @@ class PickupViewSet(viewsets.ModelViewSet):
     """
     serializer_class = PickupSerializer
     queryset = Pickup.objects.all()
+
+    def perform_create(self, serializer):
+        vehicle = Vehicle.objects.filter(users=self.request.user).order_by('id')
+        if vehicle:
+            vehicle = vehicle[0]
+            users = vehicle.users.all()
+            serializer.save(users=users, vehicle=vehicle)
+        else:
+            serializer.save(users=[self.request.user])
