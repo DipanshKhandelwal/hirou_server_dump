@@ -20,7 +20,7 @@ class Profile(models.Model):
         ('M', 'Male'),
         ('F', 'Female'),
     )
-    user = models.OneToOneField(to=User, on_delete=models.CASCADE)
+    user = models.OneToOneField(to=User, on_delete=models.CASCADE, related_name='profile')
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, blank=True)
     dob = models.DateTimeField(blank=True, null=True)
     bio = models.CharField(max_length=200, blank=True)

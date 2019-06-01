@@ -8,7 +8,7 @@ class Vehicle(models.Model):
     location = PlainLocationField(based_fields=['city'], zoom=7, null=True)
     registration_number = models.CharField(max_length=15, unique=True)
     model = models.CharField(max_length=20, blank=True)
-    users = models.ManyToManyField(to=User, null=True, blank=True)
+    users = models.ManyToManyField(to=User, blank=True, related_name='vehicle')
 
     def __str__(self):
         return self.registration_number + " - " + self.model
@@ -34,18 +34,19 @@ class CollectionPoint(models.Model):
     location = PlainLocationField(based_fields=['city'], zoom=7, null=True)  # remove null=True
     name = models.CharField(max_length=20, unique=True)
     address = models.CharField(max_length=100, blank=True)
-    area = models.ForeignKey(to=Area, on_delete=None, null=True, blank=True)  # remove null=True
+    area = models.ForeignKey(to=Area, on_delete=None, null=True, blank=True, related_name='collection_point')  # remove null=True
 
     def __str__(self):
         return self.name
 
 
 class Pickup(models.Model):
-    collection_point = models.ForeignKey(to=CollectionPoint, on_delete=None, null=True)  # remove null=True
-    vehicle = models.ForeignKey(to=Vehicle, on_delete=None)
+    collection_point = models.ForeignKey(to=CollectionPoint, on_delete=None, null=True, related_name='pickup')  # remove null=True
+    vehicle = models.ForeignKey(to=Vehicle, on_delete=None, related_name='pickup')
     timestamp = models.DateTimeField(default=timezone.now)
     image = models.FileField(blank=True, null=True)
     items = models.ManyToManyField(to=Item)
+    users = models.ManyToManyField(to=User, blank=True)
 
     def __str__(self):
         return str(self.timestamp)

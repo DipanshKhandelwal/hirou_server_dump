@@ -3,24 +3,33 @@ from rest_auth.registration.serializers import RegisterSerializer
 from rest_framework import serializers
 # from rest_framework.authtoken.models import Token
 from django.core.validators import RegexValidator
-from collection.serializers import VehicleSerializer
-
 from .models import User, Profile
+from collection.models import Vehicle
 
 
 class UserSerializer(serializers.ModelSerializer):
+    vehicle = serializers.HyperlinkedRelatedField(many=True, read_only=True, view_name='vehicle-detail')
+    profile = serializers.HyperlinkedRelatedField(many=False, read_only=True, view_name='profile-detail')
+
     class Meta:
         model = User
-        fields = ('email', 'username', 'phone_number', 'first_name', 'last_name')
+        fields = ('email', 'username', 'phone_number', 'first_name', 'last_name', 'profile', 'vehicle')
 
 
 class ProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
-    vehicle = VehicleSerializer(read_only=True)
+    vehicle_id = serializers.SerializerMethodField(read_only=True)
+    vehicle_registration_number = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Profile
-        fields = ['user', 'gender', 'dob', 'bio', 'vehicle']
+        fields = ['user', 'gender', 'dob', 'bio', 'vehicle_id', 'vehicle_registration_number']
+
+    def get_vehicle_id(self, obj):
+        return Vehicle.objects.all().filter(users=obj.user.id)[0].id
+
+    def get_vehicle_registration_number(self, obj):
+        return Vehicle.objects.all().filter(users=obj.user.id)[0].registration_number
 
 
 class CustomRegisterSerializer(RegisterSerializer):
