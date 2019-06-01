@@ -5,7 +5,7 @@ from .models import Vehicle, Item, Area, CollectionPoint, Pickup
 class VehicleAdmin(admin.ModelAdmin):
     list_display = ['registration_number', 'model']
     ordering = ['registration_number', 'model']
-    fields = ['registration_number', 'location', 'model', 'users']
+    fields = ['registration_number', 'users', 'location', 'model']
 
 
 class PickupAdmin(admin.ModelAdmin):
@@ -14,14 +14,22 @@ class PickupAdmin(admin.ModelAdmin):
 
 
 class CollectionPointAdmin(admin.ModelAdmin):
-    list_display = ['name', 'address']
-    ordering = ['name', 'address']
+    list_display = ['name', 'area', 'address']
+    ordering = ['name', 'area', 'address']
 
 
-admin.site.register(
-    [Item, Area]
-)
+class AreaAdmin(admin.ModelAdmin):
+    list_display = ['name', 'description']
+    ordering = ['name', 'description']
+
+
+class ItemAdmin(admin.ModelAdmin):
+    list_display = ['name', 'description']
+    ordering = ['name', 'description']
+
 
 admin.site.register(Vehicle, VehicleAdmin)
 admin.site.register(Pickup, PickupAdmin)
 admin.site.register(CollectionPoint, CollectionPointAdmin)
+admin.site.register(Area, AreaAdmin)
+admin.site.register(Item, ItemAdmin)
