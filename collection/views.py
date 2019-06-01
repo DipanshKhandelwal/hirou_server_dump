@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from .serializers import VehicleSerializer, CollectionPointSerializer, ItemSerializer, AreaSerializer
-from .models import Vehicle, CollectionPoint, Item, Area
+from .serializers import VehicleSerializer, CollectionPointSerializer, ItemSerializer, AreaSerializer, PickupSerializer
+from .models import Vehicle, CollectionPoint, Item, Area, Pickup
 
 
 class VehicleViewSet(viewsets.ModelViewSet):
@@ -33,3 +33,11 @@ class AreaViewSet(viewsets.ModelViewSet):
     """
     serializer_class = AreaSerializer
     queryset = Area.objects.all()
+
+
+class PickupViewSet(viewsets.ModelViewSet):
+    """
+    A viewset for viewing and editing collection area instances.
+    """
+    serializer_class = PickupSerializer
+    queryset = Pickup.objects.all()
