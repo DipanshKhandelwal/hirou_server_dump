@@ -10,6 +10,21 @@ class VehicleViewSet(viewsets.ModelViewSet):
     serializer_class = VehicleSerializer
     queryset = Vehicle.objects.all()
 
+    def perform_update(self, serializer):
+        vehicle = self.get_object()
+        users = list(vehicle.users.all())
+        users = [str(x.id) for x in users]
+        data_users = self.request.data.getlist('users')
+        user_id = str(self.request.user.id)
+        if data_users:
+            if user_id in data_users:
+                if user_id not in users:
+                    users.append(user_id)
+            else:
+                if user_id in users:
+                    users.remove(user_id)
+        serializer.save(users=users)
+
 
 class CollectionPointViewSet(viewsets.ModelViewSet):
     """
