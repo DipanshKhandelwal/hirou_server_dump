@@ -6,3 +6,5 @@ collection/__pycache__/
 *.pyc
 
 hirou_server/__pycache__/
+
+media/
