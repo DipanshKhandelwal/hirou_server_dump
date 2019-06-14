@@ -98,6 +98,12 @@ DATABASES = {
     }
 }
 
+LOCATION_FIELD = {
+    'map.provider': 'mapbox',
+    'provider.mapbox.access_token': 'pk.eyJ1Ijoicm9oYW4yNTk5IiwiYSI6ImNqd3B4cjNseTI3anAzenA2Nmk4ZnYzOWUifQ.3r3MLJcFyZZP--tL0hFyWw',
+    'provider.mapbox.max_zoom': 18,
+    'provider.mapbox.id': 'mapbox.streets',
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -167,7 +173,6 @@ AUTH_USER_MODEL = 'users.User'
 
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'users.serializers.UserSerializer',
-    'TOKEN_SERIALIZER': 'users.serializers.TokenSerializer'
 }
 
 REST_AUTH_REGISTER_SERIALIZERS = {
