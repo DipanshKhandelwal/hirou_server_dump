@@ -47,6 +47,7 @@ class Pickup(models.Model):
     image = models.FileField(blank=True, null=True)
     items = models.ManyToManyField(to=Item)
     users = models.ManyToManyField(to=User, blank=True)
+    route = models.TextField(blank=True)
 
     def __str__(self):
         return str(self.timestamp)
