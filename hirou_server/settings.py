@@ -25,7 +25,7 @@ SECRET_KEY = 'r0+^^(v=m0r!@8hhhg&$uvu(nb279ta^%r+@n8xc6sz#0&*wgm'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     'django.contrib.sites',
     'allauth',
+    'allauth.socialaccount',
     'allauth.account',
     'corsheaders',
     'rest_auth',
@@ -169,7 +170,6 @@ ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'username'
 ACCOUNT_EMAIL_VERIFICATION = 'none'
-AUTH_USER_MODEL = 'users.User'
 
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'users.serializers.UserSerializer',
