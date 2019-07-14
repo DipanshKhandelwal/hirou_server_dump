@@ -25,7 +25,7 @@ class AreaSerializer(serializers.ModelSerializer):
 
 
 class CollectionPointSerializer(serializers.ModelSerializer):
-    area = serializers.HyperlinkedRelatedField(view_name='area-detail', read_only=True)
+    area = AreaSerializer()
     pickup = serializers.HyperlinkedRelatedField(read_only=True, many=True, view_name='pickup-detail')
 
     class Meta:
@@ -34,6 +34,10 @@ class CollectionPointSerializer(serializers.ModelSerializer):
 
 
 class PickupSerializer(serializers.ModelSerializer):
+    collection_point = CollectionPointSerializer()
+    items = ItemSerializer(many=True)
+    vehicle = VehicleSerializer()
+
     class Meta:
         model = Pickup
         read_only_fields = ['id', 'timestamp', 'vehicle', 'users']
