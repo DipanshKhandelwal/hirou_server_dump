@@ -1,0 +1,184 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-07-20 11:04+0530\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: .\collection\apps.py:6
+msgid "collection"
+msgstr "コレクション"
+
+#: .\collection\apps.py:7
+msgid "Collection"
+msgstr "コレクション"
+
+#: .\collection\apps.py:8
+msgid "Collections"
+msgstr "コレクション"
+
+#: .\collection\models.py:9 .\collection\models.py:47
+msgid "location"
+msgstr "ロケーション"
+
+#: .\collection\models.py:10
+msgid "registration_number"
+msgstr "登録番号"
+
+#: .\collection\models.py:11
+msgid "model"
+msgstr "車種"
+
+#: .\collection\models.py:12 .\collection\models.py:68
+msgid "users"
+msgstr "ユーザーズ"
+
+#: .\collection\models.py:15
+msgid "Vehicle"
+msgstr "車両"
+
+#: .\collection\models.py:16
+msgid "Vehicles"
+msgstr "車両"
+
+#: .\collection\models.py:23 .\collection\models.py:35
+#: .\collection\models.py:48
+msgid "name"
+msgstr "名"
+
+#: .\collection\models.py:24 .\collection\models.py:36
+msgid "description"
+msgstr "説明"
+
+#: .\collection\models.py:27
+msgid "Item"
+msgstr "項目"
+
+#: .\collection\models.py:28
+msgid "Items"
+msgstr "アイテム"
+
+#: .\collection\models.py:39
+msgid "Area"
+msgstr "地域"
+
+#: .\collection\models.py:40
+msgid "Areas"
+msgstr "地域"
+
+#: .\collection\models.py:49
+msgid "address"
+msgstr "住所"
+
+#: .\collection\models.py:51
+msgid "area"
+msgstr "地域"
+
+#: .\collection\models.py:54
+msgid "CollectionPoint"
+msgstr "コレクション"
+
+#: .\collection\models.py:55
+msgid "CollectionPoints"
+msgstr "コレクション"
+
+#: .\collection\models.py:63
+msgid "collection_point"
+msgstr "コレクション"
+
+#: .\collection\models.py:64
+msgid "vehicle"
+msgstr "車両"
+
+#: .\collection\models.py:65
+msgid "timestamp"
+msgstr "タイムスタンプ"
+
+#: .\collection\models.py:66 .\users\models.py:21
+msgid "image"
+msgstr "画像"
+
+#: .\collection\models.py:67
+msgid "items"
+msgstr "アイテム"
+
+#: .\collection\models.py:69
+msgid "route"
+msgstr "ルート"
+
+#: .\collection\models.py:72
+msgid "Pickup"
+msgstr "拾う"
+
+#: .\collection\models.py:73
+msgid "Pickups"
+msgstr "拾う"
+
+#: .\hirou_server\settings.py:138
+msgid "English"
+msgstr "英語"
+
+#: .\hirou_server\settings.py:139
+msgid "Japanese"
+msgstr "日本語"
+
+#: .\hirou_server\urls.py:24
+msgid "Field Protect Co. Ltd."
+msgstr "株式会社フィールドプロテクト"
+
+#: .\hirou_server\urls.py:25
+msgid "Field Protect Administration"
+msgstr "フィールド保護 管理"
+
+#: .\hirou_server\urls.py:26
+msgid "Field Protect Management"
+msgstr "フィールド保護 管理"
+
+#: .\users\apps.py:6
+msgid "user"
+msgstr "ユーザーズ"
+
+#: .\users\apps.py:7 .\users\models.py:17
+msgid "User"
+msgstr "ユーザーズ"
+
+#: .\users\apps.py:8
+msgid "Users"
+msgstr "ユーザーズ"
+
+#: .\users\models.py:16
+msgid "phone_number"
+msgstr "電話番号"
+
+#: .\users\models.py:18
+msgid "gender"
+msgstr "性別"
+
+#: .\users\models.py:19
+msgid "date_of_birth"
+msgstr "誕生日"
+
+#: .\users\models.py:20
+msgid "bio"
+msgstr "バイオグラフィー"
+
+#: .\users\models.py:24
+msgid "Profile"
+msgstr "プロフィール"
+
+#: .\users\models.py:25
+msgid "Profiles"
+msgstr "プロファイル"
