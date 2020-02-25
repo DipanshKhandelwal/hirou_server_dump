@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Vehicle, CollectionPoint, Garbage, Pickup, Customer
+from .models import Vehicle, CollectionPoint, Garbage, Collection, Customer
 
 
 class GarbageSerializer(serializers.ModelSerializer):
@@ -30,12 +30,12 @@ class CollectionPointSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'location', 'address', 'pickup']
 
 
-class PickupSerializer(serializers.ModelSerializer):
+class CollectionSerializer(serializers.ModelSerializer):
     collection_point = CollectionPointSerializer()
     garbages = GarbageSerializer(many=True)
     vehicle = VehicleSerializer()
 
     class Meta:
-        model = Pickup
+        model = Collection
         read_only_fields = ['id', 'timestamp', 'vehicle', 'users']
         fields = ['id', 'collection_point', 'timestamp', 'garbages', 'vehicle', 'users', 'image', 'route']

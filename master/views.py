@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from .serializers import VehicleSerializer, CollectionPointSerializer, GarbageSerializer, PickupSerializer, CustomerSerializer
-from .models import Vehicle, CollectionPoint, Garbage, Pickup, Customer
+from .serializers import VehicleSerializer, CollectionPointSerializer, GarbageSerializer, CollectionSerializer, CustomerSerializer
+from .models import Vehicle, CollectionPoint, Garbage, Collection, Customer
 
 
 class VehicleViewSet(viewsets.ModelViewSet):
@@ -50,12 +50,12 @@ class CustomerViewSet(viewsets.ModelViewSet):
     queryset = Customer.objects.all()
 
 
-class PickupViewSet(viewsets.ModelViewSet):
+class CollectionViewSet(viewsets.ModelViewSet):
     """
-    A viewset for viewing and editing collection pickup instances.
+    A viewset for viewing and editing collection collection instances.
     """
-    serializer_class = PickupSerializer
-    queryset = Pickup.objects.all()
+    serializer_class = CollectionSerializer
+    queryset = Collection.objects.all()
 
     def perform_create(self, serializer):
         vehicle = Vehicle.objects.filter(users=self.request.user).order_by('id')

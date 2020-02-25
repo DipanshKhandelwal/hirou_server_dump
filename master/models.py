@@ -44,10 +44,10 @@ class CollectionPoint(models.Model):
         return self.name
 
 
-class Pickup(models.Model):
-    collection_point = models.ForeignKey(to=CollectionPoint, on_delete=None, null=True, related_name='pickup',
+class Collection(models.Model):
+    collection_point = models.ForeignKey(to=CollectionPoint, on_delete=None, null=True, related_name='collection',
                                          verbose_name=_('collection_point'))
-    vehicle = models.ForeignKey(to=Vehicle, on_delete=None, related_name='pickup', null=True, verbose_name=_('vehicle'))
+    vehicle = models.ForeignKey(to=Vehicle, on_delete=None, related_name='collection', null=True, verbose_name=_('vehicle'))
     timestamp = models.DateTimeField(default=timezone.now, verbose_name=_('timestamp'))
     image = models.FileField(blank=True, null=True, verbose_name=_('image'))
     garbages = models.ManyToManyField(to=Garbage, verbose_name=_('garbages'))
@@ -55,8 +55,8 @@ class Pickup(models.Model):
     route = models.TextField(blank=True, verbose_name=_('route'))
 
     class Meta:
-        verbose_name = _('Pickup')
-        verbose_name_plural = _('Pickups')
+        verbose_name = _('Collection')
+        verbose_name_plural = _('Collections')
 
     def __str__(self):
         return str(self.timestamp)

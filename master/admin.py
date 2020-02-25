@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Vehicle, Garbage, CollectionPoint, Pickup, Customer
+from .models import Vehicle, Garbage, CollectionPoint, Collection, Customer
 
 
 class VehicleAdmin(admin.ModelAdmin):
@@ -8,7 +8,7 @@ class VehicleAdmin(admin.ModelAdmin):
     fields = ['registration_number', 'users', 'location', 'model']
 
 
-class PickupAdmin(admin.ModelAdmin):
+class CollectionAdmin(admin.ModelAdmin):
     list_display = ['timestamp', 'vehicle']
     ordering = ['timestamp', 'vehicle']
 
@@ -29,7 +29,7 @@ class CustomerAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Vehicle, VehicleAdmin)
-admin.site.register(Pickup, PickupAdmin)
+admin.site.register(Collection, CollectionAdmin)
 admin.site.register(CollectionPoint, CollectionPointAdmin)
 admin.site.register(Garbage, GarbageAdmin)
 admin.site.register(Customer, CustomerAdmin)
