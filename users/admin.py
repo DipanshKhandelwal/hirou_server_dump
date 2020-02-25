@@ -8,7 +8,7 @@ def deactivate_selected_users(request, queryset):
 
 
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ['user', 'date_of_birth', 'gender', 'phone_number']
+    list_display = ['user', 'date_of_birth', 'gender', 'phone_number', 'user_id']
     ordering = ['user', 'date_of_birth', 'gender']
     actions = [deactivate_selected_users]
 

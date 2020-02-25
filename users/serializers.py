@@ -24,7 +24,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ['user', 'gender', 'dob', 'bio', 'vehicle_id', 'vehicle_registration_number', 'image']
+        fields = ['user', 'gender', 'dob', 'bio', 'vehicle_id', 'vehicle_registration_number', 'image', 'user_id']
 
     def get_vehicle_id(self, obj):
         return Vehicle.objects.all().filter(users=obj.user.id)[0].id

@@ -13,6 +13,7 @@ class Profile(models.Model):
                                  message="Phone number must be entered in the format: '+999999999'. Up to 15 digits "
                                          "allowed.")
 
+    user_id = models.CharField(max_length=40, blank=True, null=True, unique=True, verbose_name=_('user_id'))
     phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True, verbose_name=_('phone_number'))
     user = models.OneToOneField(to=User, on_delete=models.CASCADE, related_name='profile', verbose_name=_('User'))
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, blank=True, verbose_name=_('gender'))
