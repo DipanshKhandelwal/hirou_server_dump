@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from .serializers import VehicleSerializer, CollectionPointSerializer, GarbageSerializer, PickupSerializer
-from .models import Vehicle, CollectionPoint, Garbage, Pickup
+from .serializers import VehicleSerializer, CollectionPointSerializer, GarbageSerializer, PickupSerializer, CustomerSerializer
+from .models import Vehicle, CollectionPoint, Garbage, Pickup, Customer
 
 
 class VehicleViewSet(viewsets.ModelViewSet):
@@ -40,6 +40,14 @@ class GarbageViewSet(viewsets.ModelViewSet):
     """
     serializer_class = GarbageSerializer
     queryset = Garbage.objects.all()
+
+
+class CustomerViewSet(viewsets.ModelViewSet):
+    """
+    A viewset for viewing and editing customer instances.
+    """
+    serializer_class = CustomerSerializer
+    queryset = Customer.objects.all()
 
 
 class PickupViewSet(viewsets.ModelViewSet):

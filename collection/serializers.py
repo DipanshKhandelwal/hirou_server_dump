@@ -1,10 +1,16 @@
 from rest_framework import serializers
-from .models import Vehicle, CollectionPoint, Garbage, Pickup
+from .models import Vehicle, CollectionPoint, Garbage, Pickup, Customer
 
 
 class GarbageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Garbage
+        fields = ['id', 'name', 'description']
+
+
+class CustomerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Customer
         fields = ['id', 'name', 'description']
 
 

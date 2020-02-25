@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Vehicle, Garbage, CollectionPoint, Pickup
+from .models import Vehicle, Garbage, CollectionPoint, Pickup, Customer
 
 
 class VehicleAdmin(admin.ModelAdmin):
@@ -23,7 +23,13 @@ class GarbageAdmin(admin.ModelAdmin):
     ordering = ['name', 'description']
 
 
+class CustomerAdmin(admin.ModelAdmin):
+    list_display = ['name', 'description']
+    ordering = ['name', 'description']
+
+
 admin.site.register(Vehicle, VehicleAdmin)
 admin.site.register(Pickup, PickupAdmin)
 admin.site.register(CollectionPoint, CollectionPointAdmin)
 admin.site.register(Garbage, GarbageAdmin)
+admin.site.register(Customer, CustomerAdmin)
