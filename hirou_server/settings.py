@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'location_field.apps.DefaultConfig',
 
     'users',
-    'collection',
+    'master',
 ]
 
 MIDDLEWARE = [

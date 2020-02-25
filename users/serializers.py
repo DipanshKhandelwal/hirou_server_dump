@@ -4,7 +4,7 @@ from rest_framework import serializers
 # from rest_framework.authtoken.models import Token
 from django.core.validators import RegexValidator
 from .models import User, Profile
-from collection.models import Vehicle
+from master.models import Vehicle
 
 
 class UserSerializer(serializers.ModelSerializer):
