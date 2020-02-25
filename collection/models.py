@@ -19,25 +19,13 @@ class Vehicle(models.Model):
         return self.registration_number + " - " + self.model
 
 
-class Item(models.Model):
+class Garbage(models.Model):
     name = models.CharField(max_length=20, unique=True, verbose_name=_('name'))
     description = models.CharField(max_length=100, blank=True, verbose_name=_('description'))
 
     class Meta:
-        verbose_name = _('Item')
-        verbose_name_plural = _('Items')
-
-    def __str__(self):
-        return self.name
-
-
-class Area(models.Model):
-    name = models.CharField(max_length=20, unique=True, verbose_name=_('name'))
-    description = models.CharField(max_length=100, blank=True, verbose_name=_('description'))
-
-    class Meta:
-        verbose_name = _('Area')
-        verbose_name_plural = _('Areas')
+        verbose_name = _('Garbage')
+        verbose_name_plural = _('Garbages')
 
     def __str__(self):
         return self.name
@@ -47,8 +35,6 @@ class CollectionPoint(models.Model):
     location = PlainLocationField(based_fields=['city'], zoom=7, null=True, verbose_name=_('location'))
     name = models.CharField(max_length=20, unique=True, verbose_name=_('name'))
     address = models.CharField(max_length=100, blank=True, verbose_name=_('address'))
-    area = models.ForeignKey(to=Area, on_delete=None, null=True, blank=True, related_name='collection_point',
-                             verbose_name=_('area'))
 
     class Meta:
         verbose_name = _('CollectionPoint')
@@ -64,7 +50,7 @@ class Pickup(models.Model):
     vehicle = models.ForeignKey(to=Vehicle, on_delete=None, related_name='pickup', null=True, verbose_name=_('vehicle'))
     timestamp = models.DateTimeField(default=timezone.now, verbose_name=_('timestamp'))
     image = models.FileField(blank=True, null=True, verbose_name=_('image'))
-    items = models.ManyToManyField(to=Item, verbose_name=_('items'))
+    garbages = models.ManyToManyField(to=Garbage, verbose_name=_('garbages'))
     users = models.ManyToManyField(to=User, blank=True, verbose_name=_('users'))
     route = models.TextField(blank=True, verbose_name=_('route'))
 
