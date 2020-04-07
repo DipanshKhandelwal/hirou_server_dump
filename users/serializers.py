@@ -8,29 +8,31 @@ from master.models import Vehicle
 
 
 class UserSerializer(serializers.ModelSerializer):
-    vehicle = serializers.HyperlinkedRelatedField(many=True, read_only=True, view_name='vehicle-detail')
+    # vehicle = serializers.HyperlinkedRelatedField(many=True, read_only=True, view_name='vehicle-detail')
     profile = serializers.HyperlinkedRelatedField(many=False, read_only=True, view_name='profile-detail')
 
     class Meta:
         model = User
         read_only_fields = ('id')
-        fields = ('id', 'email', 'username', 'phone_number', 'first_name', 'last_name', 'profile', 'vehicle')
+        fields = ('id', 'email', 'username', 'phone_number', 'first_name', 'last_name', 'profile')
+        # fields = ('id', 'email', 'username', 'phone_number', 'first_name', 'last_name', 'profile', 'vehicle')
 
 
 class ProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
-    vehicle_id = serializers.SerializerMethodField(read_only=True)
-    vehicle_registration_number = serializers.SerializerMethodField(read_only=True)
+    # vehicle_id = serializers.SerializerMethodField(read_only=True)
+    # vehicle_registration_number = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Profile
-        fields = ['user', 'gender', 'dob', 'bio', 'vehicle_id', 'vehicle_registration_number', 'image', 'user_registration_number']
+        fields = ['user', 'gender', 'dob', 'bio', 'image']
+        # fields = ['user', 'gender', 'dob', 'bio', 'vehicle_id', 'vehicle_registration_number', 'image', 'user_registration_number']
 
-    def get_vehicle_id(self, obj):
-        return Vehicle.objects.all().filter(users=obj.user.id)[0].id
+    # def get_vehicle_id(self, obj):
+    #     return Vehicle.objects.all().filter(users=obj.user.id)[0].id
 
-    def get_vehicle_registration_number(self, obj):
-        return Vehicle.objects.all().filter(users=obj.user.id)[0].registration_number
+    # def get_vehicle_registration_number(self, obj):
+    #     return Vehicle.objects.all().filter(users=obj.user.id)[0].registration_number
 
 
 class CustomRegisterSerializer(RegisterSerializer):

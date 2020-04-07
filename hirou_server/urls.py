@@ -32,7 +32,6 @@ urlpatterns = i18n_patterns(
     path('admin/', admin.site.urls),
     path('api/', include('master.urls')),
     path('users/', include('users.urls')),
-    re_path(r'^.*', TemplateView.as_view(template_name='index.html')),
+    # re_path(r'^.*', TemplateView.as_view(template_name='index.html')),
     prefix_default_language=False,
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
