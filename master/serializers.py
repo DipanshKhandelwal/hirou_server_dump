@@ -47,7 +47,7 @@ class BaseRouteSerializer(serializers.ModelSerializer):
     # collection_point = serializers.HyperlinkedRelatedField(read_only=True, many=True, view_name='collection_point-detail')
     # collection_point = serializers.PrimaryKeyRelatedField(read_only=True, many=True)
     collection_point = CollectionPointSerializer(read_only=True, many=True)
-    garbage = GarbageSerializer(read_only=True, many=True)
+    # garbage = GarbageSerializer(many=True)
     # customer = CustomerSerializer()
     # garbage = GarbageSerializer(many=True)
 
