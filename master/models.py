@@ -99,7 +99,7 @@ class TaskRoute(models.Model):
 
 
 class TaskCollectionPoint(models.Model):
-    route = models.ForeignKey(to=TaskRoute, verbose_name=_('route'), on_delete=None)
+    route = models.ForeignKey(to=TaskRoute, verbose_name=_('route'), on_delete=models.SET_NULL, null=True, related_name='task_collection_point')
     location = PlainLocationField(based_fields=['city'], zoom=7, null=True, verbose_name=_('location'))
     name = models.CharField(max_length=20, unique=True, verbose_name=_('name'))
     address = models.CharField(max_length=100, blank=True, verbose_name=_('address'))
@@ -115,8 +115,7 @@ class TaskCollectionPoint(models.Model):
 
 
 class TaskCollection(models.Model):
-    collection_point = models.ForeignKey(to=TaskCollectionPoint, on_delete=None, null=True,
-                                         related_name='task_collection', verbose_name=_('collection_point'))
+    collection_point = models.ForeignKey(to=TaskCollectionPoint, verbose_name=_('collection_point'), on_delete=models.SET_NULL, null=True, related_name='task_collection')
     timestamp = models.DateTimeField(default=timezone.now, verbose_name=_('timestamp'))
     complete = models.BooleanField()
     amount = models.IntegerField(default=0)

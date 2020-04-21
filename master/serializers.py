@@ -43,11 +43,24 @@ class CollectionSerializer(serializers.ModelSerializer):
         fields = ['id', 'collection_point', 'available']
 
 
+class BaseRouteListSerializer(serializers.ModelSerializer):
+    # collection_point = serializers.HyperlinkedRelatedField(read_only=True, many=True, view_name='collection_point-detail')
+    # collection_point = serializers.PrimaryKeyRelatedField(read_only=True, many=True)
+    collection_point = CollectionPointSerializer(read_only=True, many=True)
+    garbage = GarbageSerializer(read_only=True, many=True)
+    # customer = CustomerSerializer()
+    # garbage = GarbageSerializer(many=True)
+
+    class Meta:
+        model = BaseRoute
+        fields = ['id', 'name', 'customer', 'collection_point', 'garbage']
+
+
 class BaseRouteSerializer(serializers.ModelSerializer):
     # collection_point = serializers.HyperlinkedRelatedField(read_only=True, many=True, view_name='collection_point-detail')
     # collection_point = serializers.PrimaryKeyRelatedField(read_only=True, many=True)
     collection_point = CollectionPointSerializer(read_only=True, many=True)
-    # garbage = GarbageSerializer(many=True)
+    # garbage = GarbageSerializer(read_only=True, many=True)
     # customer = CustomerSerializer()
     # garbage = GarbageSerializer(many=True)
 
@@ -64,23 +77,40 @@ class BaseRouteSerializer(serializers.ModelSerializer):
 #         model = BaseRoute
 #         fields = ['id', 'name', 'customer', 'collection_point']
 
+# class TaskRouteListSerializer(serializers.ModelSerializer):
+#     task_collection_point = TaskCollectionPoint()
 
-class TaskRouteSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = TaskRoute
-        fields = ['id', 'name', 'customer', 'date']
-
-
-class TaskCollectionPointSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = TaskCollectionPoint
-        fields = ['id', 'name', 'location', 'address', 'route', 'sequence', 'image']
-
+#     class Meta:
+#         model = TaskRoute
+#         fields = ['id', 'name', 'customer', 'date', 'task_collection_point']
 
 class TaskCollectionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TaskCollection
         fields = ['id', 'collection_point', 'timestamp', 'complete', 'amount', 'image', 'users', 'vehicle', 'garbage', 'available']
+
+
+class TaskCollectionListSerializer(serializers.ModelSerializer):
+    garbage = GarbageSerializer(read_only=True)
+
+    class Meta:
+        model = TaskCollection
+        fields = ['id', 'collection_point', 'timestamp', 'complete', 'amount', 'image', 'users', 'vehicle', 'garbage', 'available']
+
+
+class TaskCollectionPointSerializer(serializers.ModelSerializer):
+    task_collection = TaskCollectionListSerializer(read_only=True, many=True)
+
+    class Meta:
+        model = TaskCollectionPoint
+        fields = ['id', 'name', 'location', 'address', 'route', 'sequence', 'image', 'task_collection']
+
+
+class TaskRouteSerializer(serializers.ModelSerializer):
+    task_collection_point = TaskCollectionPointSerializer(read_only=True, many=True)
+    customer = CustomerSerializer(read_only=True)
+
+    class Meta:
+        model = TaskRoute
+        fields = ['id', 'name', 'customer', 'date', 'task_collection_point']

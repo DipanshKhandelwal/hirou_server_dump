@@ -1,5 +1,5 @@
 from rest_framework import viewsets
-from .serializers import VehicleSerializer, CollectionPointSerializer, GarbageSerializer, CollectionSerializer, CustomerSerializer, BaseRouteSerializer, TaskRouteSerializer, TaskCollectionPointSerializer, TaskCollectionSerializer
+from .serializers import VehicleSerializer, CollectionPointSerializer, GarbageSerializer, CollectionSerializer, CustomerSerializer, BaseRouteSerializer, BaseRouteListSerializer, TaskRouteSerializer, TaskCollectionPointSerializer, TaskCollectionSerializer
 from .models import Vehicle, CollectionPoint, Garbage, Collection, Customer, BaseRoute, TaskRoute, TaskCollectionPoint, TaskCollection
 
 
@@ -71,8 +71,13 @@ class BaseRouteViewSet(viewsets.ModelViewSet):
     """
     A viewset for viewing and editing base route instances.
     """
-    serializer_class = BaseRouteSerializer
+    # serializer_class = BaseRouteSerializer
     queryset = BaseRoute.objects.all()
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return BaseRouteListSerializer
+        return BaseRouteSerializer
 
 
 # 
