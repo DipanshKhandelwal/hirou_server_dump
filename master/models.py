@@ -46,7 +46,7 @@ class Garbage(models.Model):
 class BaseRoute(models.Model):
     name = models.CharField(max_length=30, unique=True, verbose_name=_('name'))
     customer = models.ForeignKey(to=Customer, verbose_name=_('customer'), on_delete=models.SET_NULL, null=True)
-    garbage = models.ManyToManyField(to=Garbage, verbose_name=_('garbage'), related_name='route')
+    garbage = models.ManyToManyField(to=Garbage, verbose_name=_('garbage'), related_name='route', blank=True)
 
     class Meta:
         verbose_name = _('BaseRoute')

@@ -69,21 +69,6 @@ class BaseRouteSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'customer', 'collection_point', 'garbage']
 
 
-# class BaseRouteListSerializer(serializers.ModelSerializer):
-#     collection_point = CollectionPointSerializer(read_only=True, many=True)
-#     customer = CustomerSerializer()
-#
-#     class Meta:
-#         model = BaseRoute
-#         fields = ['id', 'name', 'customer', 'collection_point']
-
-# class TaskRouteListSerializer(serializers.ModelSerializer):
-#     task_collection_point = TaskCollectionPoint()
-
-#     class Meta:
-#         model = TaskRoute
-#         fields = ['id', 'name', 'customer', 'date', 'task_collection_point']
-
 class TaskCollectionSerializer(serializers.ModelSerializer):
 
     class Meta:
