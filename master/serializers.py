@@ -48,7 +48,7 @@ class BaseRouteListSerializer(serializers.ModelSerializer):
     # collection_point = serializers.PrimaryKeyRelatedField(read_only=True, many=True)
     collection_point = CollectionPointSerializer(read_only=True, many=True)
     garbage = GarbageSerializer(read_only=True, many=True)
-    # customer = CustomerSerializer()
+    customer = CustomerSerializer()
     # garbage = GarbageSerializer(many=True)
 
     class Meta:
