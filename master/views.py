@@ -92,6 +92,17 @@ class TaskRouteViewSet(viewsets.ModelViewSet):
     serializer_class = TaskRouteSerializer
     queryset = TaskRoute.objects.all()
 
+    def perform_create(self, serializer):
+        base_route_id = self.request.data["id"]
+        new_task_name = self.request.data["name"]
+        route = BaseRoute.objects.get(id=base_route_id)
+        new_task_route = TaskRoute(name=new_task_name)
+        new_task_route.customer = route.customer
+        garbages = route.garbage.all()
+        new_task_route.save()
+        new_task_route.garbage.add(*garbages)
+        new_task_route.save()
+
 
 class TaskCollectionPointViewSet(viewsets.ModelViewSet):
     """
