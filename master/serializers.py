@@ -95,7 +95,8 @@ class TaskCollectionPointSerializer(serializers.ModelSerializer):
 class TaskRouteSerializer(serializers.ModelSerializer):
     task_collection_point = TaskCollectionPointSerializer(read_only=True, many=True)
     customer = CustomerSerializer(read_only=True)
+    garbage = GarbageSerializer(read_only=True, many=True)
 
     class Meta:
         model = TaskRoute
-        fields = ['id', 'name', 'customer', 'date', 'task_collection_point']
+        fields = ['id', 'name', 'customer', 'garbage', 'date', 'task_collection_point']
