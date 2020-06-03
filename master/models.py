@@ -102,7 +102,7 @@ class TaskRoute(models.Model):
 class TaskCollectionPoint(models.Model):
     route = models.ForeignKey(to=TaskRoute, verbose_name=_('route'), on_delete=models.SET_NULL, null=True, related_name='task_collection_point')
     location = PlainLocationField(based_fields=['city'], zoom=7, verbose_name=_('location'))
-    name = models.CharField(max_length=20, unique=True, verbose_name=_('name'))
+    name = models.CharField(max_length=20, verbose_name=_('name'))
     address = models.CharField(max_length=100, blank=True, verbose_name=_('address'))
     sequence = models.IntegerField(verbose_name=_('sequence'))
     image = models.FileField(verbose_name=_('image'), blank=True, null=True)
