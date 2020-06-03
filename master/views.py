@@ -98,9 +98,25 @@ class TaskRouteViewSet(viewsets.ModelViewSet):
         route = BaseRoute.objects.get(id=base_route_id)
         new_task_route = TaskRoute(name=new_task_name)
         new_task_route.customer = route.customer
-        garbages = route.garbage.all()
+
         new_task_route.save()
+
+        garbages = route.garbage.all()
         new_task_route.garbage.add(*garbages)
+
+        collection_points = route.collection_point.all()
+
+        for cp in collection_points:
+            new_task_collection_point = TaskCollectionPoint()
+            new_task_collection_point.location = cp.location
+            new_task_collection_point.route = new_task_route
+            new_task_collection_point.name = cp.name
+            new_task_collection_point.address = cp.address
+            new_task_collection_point.sequence = cp.sequence
+            new_task_collection_point.image = cp.image
+            new_task_collection_point.save()
+            new_task_route.task_collection_point.add(new_task_collection_point)
+
         new_task_route.save()
 
 
