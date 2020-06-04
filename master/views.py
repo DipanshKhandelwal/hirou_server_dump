@@ -115,6 +115,14 @@ class TaskRouteViewSet(viewsets.ModelViewSet):
             new_task_collection_point.sequence = cp.sequence
             new_task_collection_point.image = cp.image
             new_task_collection_point.save()
+
+            for garbage in garbages:
+                new_collection = TaskCollection()
+                new_collection.collection_point = new_task_collection_point
+                new_collection.garbage = garbage
+                new_collection.save()
+                new_task_collection_point.task_collection.add(new_collection)
+
             new_task_route.task_collection_point.add(new_task_collection_point)
 
         new_task_route.save()
