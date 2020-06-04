@@ -117,12 +117,19 @@ class TaskCollectionPoint(models.Model):
 
 class TaskCollection(models.Model):
     collection_point = models.ForeignKey(to=TaskCollectionPoint, verbose_name=_('collection_point'), on_delete=models.SET_NULL, null=True, related_name='task_collection')
-    timestamp = models.DateTimeField(default=timezone.now, verbose_name=_('timestamp'))
-    complete = models.BooleanField()
+    timestamp = models.DateTimeField(default=None, verbose_name=_('timestamp'), null=True)
+    complete = models.BooleanField(default=False)
     amount = models.IntegerField(default=0)
     image = models.FileField(blank=True, null=True, verbose_name=_('image'))
     users = models.ForeignKey(to=User, blank=True, verbose_name=_('users'), on_delete=models.SET_NULL, null=True)
     vehicle = models.ForeignKey(to=Vehicle, on_delete=None, related_name='collection', null=True,
                                 verbose_name=_('vehicle'))
     garbage = models.ForeignKey(to=Garbage, verbose_name=_('garbage'), on_delete=models.SET_NULL, null=True)
-    available = models.BooleanField()
+    available = models.BooleanField(default=False)
+
+    class Meta:
+        verbose_name = _('TaskCollection')
+        verbose_name_plural = _('TaskCollections')
+
+    def __str__(self):
+        return self.collection_point.name + str(self.collection_point.sequence) + self.garbage.name
