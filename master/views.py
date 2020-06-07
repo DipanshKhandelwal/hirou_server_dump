@@ -93,6 +93,15 @@ class TaskRouteViewSet(viewsets.ModelViewSet):
     serializer_class = TaskRouteSerializer
     queryset = TaskRoute.objects.all()
 
+    def get_queryset(self):
+        queryset = TaskRoute.objects.all()
+        date = self.request.query_params.get('date', None)
+
+        if date:
+            queryset = queryset.filter(date=date)
+
+        return queryset
+
     def perform_create(self, serializer):
         base_route_id = self.request.data["id"]
         new_task_name = self.request.data["name"]
