@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from rest_framework import viewsets
 from .serializers import VehicleSerializer, CollectionPointSerializer, GarbageSerializer, CollectionSerializer, CustomerSerializer, BaseRouteSerializer, BaseRouteListSerializer, TaskRouteSerializer, TaskCollectionPointSerializer, TaskCollectionSerializer
 from .models import Vehicle, CollectionPoint, Garbage, Collection, Customer, BaseRoute, TaskRoute, TaskCollectionPoint, TaskCollection
@@ -165,6 +166,4 @@ class TaskCollectionViewSet(viewsets.ModelViewSet):
             task_collection.complete = False
             task_collection.timestamp = None
             task_collection.amount = 0
-        serializer.save()
-
-
+        return HttpResponse(serializer.save())
