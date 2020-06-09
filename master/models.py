@@ -90,6 +90,7 @@ class TaskRoute(models.Model):
     name = models.CharField(max_length=30, unique=True, verbose_name=_('name'))
     customer = models.ForeignKey(to=Customer, verbose_name=_('customer'), on_delete=models.SET_NULL, null=True)
     garbage = models.ManyToManyField(to=Garbage, verbose_name=_('garbage'), blank=True)
+    vehicle = models.ForeignKey(to=Vehicle, on_delete=None, related_name='route', null=True, verbose_name=_('vehicle'))
 
     class Meta:
         verbose_name = _('Task')
