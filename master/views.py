@@ -1,8 +1,6 @@
-from django.http import HttpResponse
 from rest_framework import viewsets
 from .serializers import VehicleSerializer, CollectionPointSerializer, GarbageSerializer, CollectionSerializer, CustomerSerializer, BaseRouteSerializer, BaseRouteListSerializer, TaskRouteSerializer, TaskCollectionPointSerializer, TaskCollectionSerializer
 from .models import Vehicle, CollectionPoint, Garbage, Collection, Customer, BaseRoute, TaskRoute, TaskCollectionPoint, TaskCollection
-from django.utils import timezone
 
 
 class VehicleViewSet(viewsets.ModelViewSet):
@@ -154,16 +152,3 @@ class TaskCollectionViewSet(viewsets.ModelViewSet):
     serializer_class = TaskCollectionSerializer
     queryset = TaskCollection.objects.all()
 
-    def partial_update(self, request, *args, **kwargs):
-        task_collection = self.queryset.get(pk=kwargs.get('pk'))
-        serializer = self.serializer_class(task_collection, data=request.data, partial=True)
-        serializer.is_valid(raise_exception=True)
-
-        if self.request.data["complete"]:
-            task_collection.complete = True
-            task_collection.timestamp = timezone.now()
-        else:
-            task_collection.complete = False
-            task_collection.timestamp = None
-            task_collection.amount = 0
-        return HttpResponse(serializer.save())

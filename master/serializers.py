@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Vehicle, CollectionPoint, Garbage, Collection, Customer, BaseRoute, TaskRoute, TaskCollectionPoint, TaskCollection
+from django.utils import timezone
 
 
 class GarbageSerializer(serializers.ModelSerializer):
@@ -75,6 +76,21 @@ class TaskCollectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = TaskCollection
         fields = ['id', 'collection_point', 'timestamp', 'complete', 'amount', 'image', 'users', 'vehicle', 'garbage', 'available']
+
+    def update(self, instance, validated_data):
+        super(TaskCollectionSerializer, self).update(instance, validated_data)
+
+        if validated_data.get('complete', None) is not None:
+            if validated_data.get('complete'):
+                instance.complete = True
+                instance.timestamp = timezone.now()
+                instance.available = False
+            else:
+                instance.complete = False
+                instance.timestamp = None
+                instance.amount = 0
+        instance.save()
+        return instance
 
 
 class TaskCollectionListSerializer(serializers.ModelSerializer):
