@@ -70,6 +70,7 @@ class BaseRouteSerializer(serializers.ModelSerializer):
 
 
 class TaskCollectionSerializer(serializers.ModelSerializer):
+    garbage = GarbageSerializer(read_only=True)
 
     class Meta:
         model = TaskCollection
