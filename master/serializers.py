@@ -72,6 +72,13 @@ class BaseRouteSerializer(serializers.ModelSerializer):
 
 class TaskCollectionSerializer(serializers.ModelSerializer):
     garbage = GarbageSerializer(read_only=True)
+    timestamp = serializers.SerializerMethodField()
+
+    @staticmethod
+    def get_timestamp(obj):
+        if obj.timestamp is None:
+            return None
+        return obj.timestamp.ctime()
 
     class Meta:
         model = TaskCollection
@@ -95,6 +102,13 @@ class TaskCollectionSerializer(serializers.ModelSerializer):
 
 class TaskCollectionListSerializer(serializers.ModelSerializer):
     garbage = GarbageSerializer(read_only=True)
+    timestamp = serializers.SerializerMethodField()
+
+    @staticmethod
+    def get_timestamp(obj):
+        if obj.timestamp is None:
+            return None
+        return obj.timestamp.ctime()
 
     class Meta:
         model = TaskCollection
