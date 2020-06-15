@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from .serializers import VehicleSerializer, CollectionPointSerializer, GarbageSerializer, CollectionSerializer, CustomerSerializer, BaseRouteSerializer, BaseRouteListSerializer, TaskRouteSerializer, TaskCollectionPointSerializer, TaskCollectionSerializer
-from .models import Vehicle, CollectionPoint, Garbage, Collection, Customer, BaseRoute, TaskRoute, TaskCollectionPoint, TaskCollection
+from .serializers import VehicleSerializer, CollectionPointSerializer, GarbageSerializer, CustomerSerializer, BaseRouteSerializer, BaseRouteListSerializer, TaskRouteSerializer, TaskCollectionPointSerializer, TaskCollectionSerializer
+from .models import Vehicle, CollectionPoint, Garbage, Customer, BaseRoute, TaskRoute, TaskCollectionPoint, TaskCollection
 
 
 class VehicleViewSet(viewsets.ModelViewSet):
@@ -48,23 +48,6 @@ class CustomerViewSet(viewsets.ModelViewSet):
     """
     serializer_class = CustomerSerializer
     queryset = Customer.objects.all()
-
-
-class CollectionViewSet(viewsets.ModelViewSet):
-    """
-    A viewset for viewing and editing collection collection instances.
-    """
-    serializer_class = CollectionSerializer
-    queryset = Collection.objects.all()
-
-    # def perform_create(self, serializer):
-    #     vehicle = Vehicle.objects.filter(users=self.request.user).order_by('id')
-    #     if vehicle:
-    #         vehicle = vehicle[0]
-    #         users = vehicle.users.all()
-    #         serializer.save(users=users, vehicle=vehicle)
-    #     else:
-    #         serializer.save(users=[self.request.user])
 
 
 class BaseRouteViewSet(viewsets.ModelViewSet):

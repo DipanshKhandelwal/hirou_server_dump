@@ -72,19 +72,6 @@ class CollectionPoint(models.Model):
         return self.name
 
 
-class Collection(models.Model):
-    collection_point = models.ForeignKey(to=CollectionPoint, on_delete=models.SET_NULL, null=True, related_name='collection',
-                                         verbose_name=_('collection_point'))
-    available = models.BooleanField()
-
-    class Meta:
-        verbose_name = _('Collection')
-        verbose_name_plural = _('Collections')
-
-    def __str__(self):
-        return str(self.timestamp)
-
-
 class TaskRoute(models.Model):
     date = models.DateField(default=timezone.now)
     name = models.CharField(max_length=30, unique=True, verbose_name=_('name'))
