@@ -104,6 +104,7 @@ class TaskRouteViewSet(viewsets.ModelViewSet):
             new_task_collection_point.route = new_task_route
             new_task_collection_point.name = cp.name
             new_task_collection_point.address = cp.address
+            new_task_collection_point.memo = cp.memo
             new_task_collection_point.sequence = cp.sequence
             new_task_collection_point.image = cp.image
             new_task_collection_point.save()
