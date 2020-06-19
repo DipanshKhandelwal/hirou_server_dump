@@ -29,8 +29,7 @@ class CollectionPointSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CollectionPoint
-        fields = ['id', 'name', 'location', 'address', 'route', 'sequence', 'image']
-        # fields = ['id', 'name', 'location', 'address', 'pickup']
+        fields = ['id', 'name', 'location', 'address', 'memo', 'route', 'sequence', 'image']
 
 
 class BaseRouteListSerializer(serializers.ModelSerializer):
@@ -109,7 +108,7 @@ class TaskCollectionPointSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TaskCollectionPoint
-        fields = ['id', 'name', 'location', 'address', 'route', 'sequence', 'image', 'task_collection']
+        fields = ['id', 'name', 'location', 'address', 'memo', 'route', 'sequence', 'image', 'task_collection']
 
 
 class TaskRouteSerializer(serializers.ModelSerializer):

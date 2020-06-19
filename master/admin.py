@@ -9,8 +9,8 @@ class VehicleAdmin(admin.ModelAdmin):
 
 
 class CollectionPointAdmin(admin.ModelAdmin):
-    list_display = ['route', 'sequence', 'name', 'address']
-    ordering = ['route', 'sequence', 'name', 'address']
+    list_display = ['route', 'sequence', 'name', 'memo', 'address']
+    ordering = ['route', 'sequence', 'name', 'memo', 'address']
 
 
 class GarbageAdmin(admin.ModelAdmin):
@@ -35,8 +35,8 @@ class TaskCollectionAdmin(admin.ModelAdmin):
 
 
 class TaskCollectionPointAdmin(admin.ModelAdmin):
-    list_display = ['route', 'sequence', 'name', 'address']
-    ordering = ['route', 'sequence', 'name', 'address']
+    list_display = ['route', 'sequence', 'name', 'memo', 'address']
+    ordering = ['route', 'sequence', 'name', 'memo', 'address']
 
 
 class TaskRouteAdmin(admin.ModelAdmin):
