@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'location_field.apps.DefaultConfig',
+    'storages',
 
     'users',
     'master',
@@ -181,3 +182,9 @@ REST_AUTH_SERIALIZERS = {
 REST_AUTH_REGISTER_SERIALIZERS = {
     'REGISTER_SERIALIZER': 'users.serializers.CustomRegisterSerializer',
 }
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+AWS_ACCESS_KEY_ID = 'AKIAQVUB54BWJAAGKFVY'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'hirou-storage'
