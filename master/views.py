@@ -1,3 +1,4 @@
+from django.utils import timezone
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 
@@ -141,7 +142,15 @@ class TaskCollectionPointViewSet(viewsets.ModelViewSet):
                 break
 
         for tc in task_c_p.task_collection.all():
-            tc.complete = not complete
+            if not complete:
+                tc.complete = True
+                tc.timestamp = timezone.now()
+                tc.available = False
+            else:
+                tc.complete = False
+                tc.timestamp = None
+                tc.amount = 0
+
             tc.save()
 
         return Response(TaskCollectionSerializer(task_c_p.task_collection.all(), many=True).data)
