@@ -1,6 +1,10 @@
-from rest_framework import viewsets
+from django.utils import timezone
+from rest_framework import viewsets, status
+from rest_framework.decorators import action
+
 from .serializers import VehicleSerializer, CollectionPointSerializer, GarbageSerializer, CustomerSerializer, BaseRouteSerializer, BaseRouteListSerializer, TaskRouteSerializer, TaskCollectionPointSerializer, TaskCollectionSerializer
 from .models import Vehicle, CollectionPoint, Garbage, Customer, BaseRoute, TaskRoute, TaskCollectionPoint, TaskCollection
+from rest_framework.response import Response
 
 
 class VehicleViewSet(viewsets.ModelViewSet):
@@ -60,10 +64,10 @@ class BaseRouteViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.action == 'list':
             return BaseRouteListSerializer
-        
+
         if self.action == 'retrieve':
             return BaseRouteListSerializer
-        
+
         return BaseRouteSerializer
 
 
@@ -127,6 +131,29 @@ class TaskCollectionPointViewSet(viewsets.ModelViewSet):
     """
     serializer_class = TaskCollectionPointSerializer
     queryset = TaskCollectionPoint.objects.all()
+
+    @action(detail=True, methods=['patch'])
+    def bulk_complete(self, request, pk=None):
+        task_c_p = self.get_object()
+        complete = True
+        for tc in task_c_p.task_collection.all():
+            if not tc.complete:
+                complete = False
+                break
+
+        for tc in task_c_p.task_collection.all():
+            if not complete:
+                tc.complete = True
+                tc.timestamp = timezone.now()
+                tc.available = False
+            else:
+                tc.complete = False
+                tc.timestamp = None
+                tc.amount = 0
+
+            tc.save()
+
+        return Response(TaskCollectionSerializer(task_c_p.task_collection.all(), many=True).data)
 
 
 class TaskCollectionViewSet(viewsets.ModelViewSet):
