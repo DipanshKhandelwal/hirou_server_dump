@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Vehicle, CollectionPoint, Garbage, Customer, BaseRoute, TaskRoute, TaskCollectionPoint, TaskCollection
+from .models import Vehicle, CollectionPoint, Garbage, ReportType, Customer, BaseRoute, TaskRoute, TaskCollectionPoint, TaskCollection
 from django.utils import timezone
 
 
@@ -7,6 +7,12 @@ class GarbageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Garbage
         fields = ['id', 'name', 'description', 'route']
+
+
+class ReportTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ReportType
+        fields = ['id', 'name', 'description']
 
 
 class CustomerSerializer(serializers.ModelSerializer):

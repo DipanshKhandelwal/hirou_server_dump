@@ -2,8 +2,8 @@ from django.utils import timezone
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 
-from .serializers import VehicleSerializer, CollectionPointSerializer, GarbageSerializer, CustomerSerializer, BaseRouteSerializer, BaseRouteListSerializer, TaskRouteSerializer, TaskCollectionPointSerializer, TaskCollectionSerializer
-from .models import Vehicle, CollectionPoint, Garbage, Customer, BaseRoute, TaskRoute, TaskCollectionPoint, TaskCollection
+from .serializers import VehicleSerializer, CollectionPointSerializer, GarbageSerializer, CustomerSerializer, BaseRouteSerializer, BaseRouteListSerializer, TaskRouteSerializer, TaskCollectionPointSerializer, TaskCollectionSerializer, ReportTypeSerializer
+from .models import Vehicle, CollectionPoint, Garbage, ReportType, Customer, BaseRoute, TaskRoute, TaskCollectionPoint, TaskCollection
 from rest_framework.response import Response
 
 
@@ -44,6 +44,14 @@ class GarbageViewSet(viewsets.ModelViewSet):
     """
     serializer_class = GarbageSerializer
     queryset = Garbage.objects.all()
+
+
+class ReportTypeViewSet(viewsets.ModelViewSet):
+    """
+    A viewset for viewing and editing report type instances.
+    """
+    serializer_class = ReportTypeSerializer
+    queryset = ReportType.objects.all()
 
 
 class CustomerViewSet(viewsets.ModelViewSet):

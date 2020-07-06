@@ -43,6 +43,18 @@ class Garbage(models.Model):
         return self.name
 
 
+class ReportType(models.Model):
+    name = models.CharField(max_length=20, unique=True, verbose_name=_('name'))
+    description = models.CharField(max_length=100, blank=True, verbose_name=_('description'))
+
+    class Meta:
+        verbose_name = _('ReportType')
+        verbose_name_plural = _('ReportTypes')
+
+    def __str__(self):
+        return self.name
+
+
 class BaseRoute(models.Model):
     name = models.CharField(max_length=30, unique=True, verbose_name=_('name'))
     customer = models.ForeignKey(to=Customer, verbose_name=_('customer'), on_delete=models.SET_NULL, null=True, related_name='route')

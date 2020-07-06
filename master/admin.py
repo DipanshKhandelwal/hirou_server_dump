@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Vehicle, Garbage, CollectionPoint, Customer, BaseRoute, TaskRoute, TaskCollectionPoint, TaskCollection
+from .models import Vehicle, Garbage, ReportType, CollectionPoint, Customer, BaseRoute, TaskRoute, TaskCollectionPoint, TaskCollection
 
 
 class VehicleAdmin(admin.ModelAdmin):
@@ -14,6 +14,11 @@ class CollectionPointAdmin(admin.ModelAdmin):
 
 
 class GarbageAdmin(admin.ModelAdmin):
+    list_display = ['name', 'description']
+    ordering = ['name', 'description']
+
+
+class ReportTypeAdmin(admin.ModelAdmin):
     list_display = ['name', 'description']
     ordering = ['name', 'description']
 
@@ -47,6 +52,7 @@ class TaskRouteAdmin(admin.ModelAdmin):
 admin.site.register(Vehicle, VehicleAdmin)
 admin.site.register(CollectionPoint, CollectionPointAdmin)
 admin.site.register(Garbage, GarbageAdmin)
+admin.site.register(ReportType, ReportTypeAdmin)
 admin.site.register(Customer, CustomerAdmin)
 admin.site.register(BaseRoute, BaseRouteAdmin)
 
