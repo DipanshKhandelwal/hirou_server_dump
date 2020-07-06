@@ -174,7 +174,12 @@ class TaskCollectionViewSet(viewsets.ModelViewSet):
 
 class TaskReportViewSet(viewsets.ModelViewSet):
     """
-    A viewset for viewing and editing task collection instances.
+    A viewset for viewing and editing task report instances.
     """
-    serializer_class = TaskReportSerializer
     queryset = TaskReport.objects.all()
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return TaskReportListSerializer
+
+        return TaskReportSerializer

@@ -133,3 +133,12 @@ class TaskReportSerializer(serializers.ModelSerializer):
         model = TaskReport
         fields = ['id', 'route', 'collection_point', 'report_type', 'image']
 
+
+class TaskReportListSerializer(serializers.ModelSerializer):
+    collection_point = CollectionPointSerializer()
+    report_type = ReportTypeSerializer()
+    route = TaskRouteSerializer()
+
+    class Meta:
+        model = TaskReport
+        fields = ['id', 'route', 'collection_point', 'report_type', 'image']
