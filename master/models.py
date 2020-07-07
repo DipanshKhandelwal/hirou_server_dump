@@ -149,3 +149,17 @@ class TaskReport(models.Model):
 
     def __str__(self):
         return self.collection_point.name
+
+
+class TaskAmount(models.Model):
+    route = models.ForeignKey(to=TaskRoute, verbose_name=_('route'), on_delete=models.SET_NULL, null=True, related_name='amount')
+    garbage = models.ForeignKey(to=Garbage, verbose_name=_('garbage'), on_delete=models.SET_NULL, null=True, related_name='amount')
+    amount = models.IntegerField(default=0)
+    user = models.ForeignKey(to=User, verbose_name=_('user'), on_delete=models.SET_NULL, null=True, related_name='amount')
+
+    class Meta:
+        verbose_name = _('TaskAmount')
+        verbose_name_plural = _('TaskAmounts')
+
+    def __str__(self):
+        return self.route.name + self.garbage.name + str(self.amount)
