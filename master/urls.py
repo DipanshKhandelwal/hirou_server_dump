@@ -1,4 +1,4 @@
-from .views import VehicleViewSet, CollectionPointViewSet, GarbageViewSet, ReportTypeViewSet, CustomerViewSet, BaseRouteViewSet, TaskRouteViewSet, TaskCollectionPointViewSet, TaskCollectionViewSet, TaskReportViewSet
+from .views import VehicleViewSet, CollectionPointViewSet, GarbageViewSet, ReportTypeViewSet, CustomerViewSet, BaseRouteViewSet, TaskRouteViewSet, TaskCollectionPointViewSet, TaskCollectionViewSet, TaskReportViewSet, TaskAmountViewSet
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
@@ -14,6 +14,7 @@ router.register(r'task_route', TaskRouteViewSet, base_name='task_route')
 router.register(r'task_collection_point', TaskCollectionPointViewSet, base_name='task_collection_point')
 router.register(r'task_collection', TaskCollectionViewSet, base_name='task_collection')
 router.register(r'task_report', TaskReportViewSet, base_name='task_report')
+router.register(r'task_amount', TaskAmountViewSet, base_name='task_amount')
 
 
 urlpatterns = router.urls
