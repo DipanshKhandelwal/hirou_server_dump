@@ -75,7 +75,7 @@ class CollectionPoint(models.Model):
     address = models.CharField(max_length=100, blank=True, verbose_name=_('address'), default="")
     memo = models.CharField(max_length=100, blank=True, verbose_name=_('memo'), default="")
     sequence = models.IntegerField(verbose_name=_('sequence'), null=True)
-    image = models.FileField(verbose_name=_('image'), blank=True, null=True)
+    image = models.FileField(verbose_name=_('image'), blank=True, null=True, upload_to='collection_points')
 
     class Meta:
         verbose_name = _('CollectionPoint')
