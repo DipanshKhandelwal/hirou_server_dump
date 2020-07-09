@@ -141,7 +141,7 @@ class TaskReport(models.Model):
     route = models.ForeignKey(to=TaskRoute, verbose_name=_('route'), on_delete=models.SET_NULL, null=True, related_name='report')
     collection_point = models.ForeignKey(to=CollectionPoint, verbose_name=_('collection_point'), on_delete=models.SET_NULL, null=True, related_name='report')
     report_type = models.ForeignKey(to=ReportType, verbose_name=_('report_type'), on_delete=models.SET_NULL, null=True, related_name='report')
-    image = models.FileField(verbose_name=_('image'), blank=True, null=True)
+    image = models.FileField(verbose_name=_('image'), blank=True, null=True, upload_to='reports')
 
     class Meta:
         verbose_name = _('TaskReport')
