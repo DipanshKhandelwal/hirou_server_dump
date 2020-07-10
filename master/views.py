@@ -178,6 +178,15 @@ class TaskReportViewSet(viewsets.ModelViewSet):
     """
     queryset = TaskReport.objects.all()
 
+    def get_queryset(self):
+        queryset = TaskReport.objects.all()
+        task_route = self.request.query_params.get('task_route', None)
+
+        if task_route:
+            queryset = queryset.filter(route=task_route)
+
+        return queryset
+
     def get_serializer_class(self):
         if self.action == 'list':
             return TaskReportListSerializer
