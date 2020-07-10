@@ -135,9 +135,7 @@ class TaskReportSerializer(serializers.ModelSerializer):
 
 
 class TaskReportListSerializer(serializers.ModelSerializer):
-    collection_point = CollectionPointSerializer()
     report_type = ReportTypeSerializer()
-    route = TaskRouteSerializer()
 
     class Meta:
         model = TaskReport
