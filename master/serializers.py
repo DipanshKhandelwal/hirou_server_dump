@@ -145,6 +145,7 @@ class TaskReportListSerializer(serializers.ModelSerializer):
 
 
 class TaskAmountSerializer(serializers.ModelSerializer):
+    garbage = GarbageSerializer(read_only=True)
 
     class Meta:
         model = TaskAmount
