@@ -191,3 +191,12 @@ class TaskAmountViewSet(viewsets.ModelViewSet):
     """
     serializer_class = TaskAmountSerializer
     queryset = TaskAmount.objects.all()
+
+    def get_queryset(self):
+        queryset = TaskAmount.objects.all()
+        task_route = self.request.query_params.get('task_route', None)
+
+        if task_route:
+            queryset = queryset.filter(route=task_route)
+
+        return queryset
