@@ -86,11 +86,16 @@ class CollectionPoint(models.Model):
 
 
 class TaskRoute(models.Model):
-    date = models.DateField(default=timezone.now)
+    date = models.DateField()
     name = models.CharField(max_length=30, unique=True, verbose_name=_('name'))
     customer = models.ForeignKey(to=Customer, verbose_name=_('customer'), on_delete=models.SET_NULL, null=True, related_name='task_route')
     garbage = models.ManyToManyField(to=Garbage, verbose_name=_('garbage'), blank=True, related_name='task_route',)
     vehicle = models.ForeignKey(to=Vehicle, on_delete=models.SET_NULL, related_name='task_route', null=True, verbose_name=_('vehicle'))
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.date = timezone.now()
+        return super(TaskRoute, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = _('Task')
@@ -144,6 +149,11 @@ class TaskReport(models.Model):
     image = models.FileField(verbose_name=_('image'), blank=True, null=True, upload_to='reports')
     timestamp = models.DateTimeField(verbose_name=_('timestamp'), null=True)
 
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.timestamp = timezone.now()
+        return super(TaskReport, self).save(*args, **kwargs)
+
     class Meta:
         verbose_name = _('TaskReport')
         verbose_name_plural = _('TaskReports')
@@ -158,6 +168,11 @@ class TaskAmount(models.Model):
     amount = models.IntegerField(default=0)
     user = models.ForeignKey(to=User, verbose_name=_('user'), on_delete=models.SET_NULL, null=True, related_name='amount')
     timestamp = models.DateTimeField(verbose_name=_('timestamp'), null=True)
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.timestamp = timezone.now()
+        return super(TaskAmount, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = _('TaskAmount')
