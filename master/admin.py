@@ -50,13 +50,13 @@ class TaskRouteAdmin(admin.ModelAdmin):
 
 
 class TaskReportAdmin(admin.ModelAdmin):
-    list_display = ['report_type', 'collection_point', 'route', 'image']
-    ordering = ['report_type', 'collection_point', 'route', 'image']
+    list_display = ['timestamp', 'report_type', 'collection_point', 'route', 'image']
+    ordering = ['timestamp', 'report_type', 'collection_point', 'route', 'image']
 
 
 class TaskAmountAdmin(admin.ModelAdmin):
-    list_display = ['route', 'garbage', 'amount', 'user']
-    ordering = ['route', 'garbage', 'amount', 'user']
+    list_display = ['timestamp', 'route', 'garbage', 'amount', 'user']
+    ordering = ['timestamp', 'route', 'garbage', 'amount', 'user']
 
 
 admin.site.register(Vehicle, VehicleAdmin)

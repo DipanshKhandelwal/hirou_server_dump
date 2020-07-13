@@ -139,7 +139,7 @@ class TaskReportListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TaskReport
-        fields = ['id', 'route', 'collection_point', 'report_type', 'image']
+        fields = ['id', 'route', 'collection_point', 'report_type', 'image', 'timestamp']
 
 
 class TaskAmountSerializer(serializers.ModelSerializer):
@@ -147,4 +147,4 @@ class TaskAmountSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TaskAmount
-        fields = ['id', 'route', 'garbage', 'amount', 'user']
+        fields = ['id', 'route', 'garbage', 'amount', 'user', 'timestamp']

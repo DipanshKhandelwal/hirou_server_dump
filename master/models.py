@@ -142,6 +142,7 @@ class TaskReport(models.Model):
     collection_point = models.ForeignKey(to=CollectionPoint, verbose_name=_('collection_point'), on_delete=models.SET_NULL, null=True, related_name='report')
     report_type = models.ForeignKey(to=ReportType, verbose_name=_('report_type'), on_delete=models.SET_NULL, null=True, related_name='report')
     image = models.FileField(verbose_name=_('image'), blank=True, null=True, upload_to='reports')
+    timestamp = models.DateTimeField(verbose_name=_('timestamp'), null=True)
 
     class Meta:
         verbose_name = _('TaskReport')
@@ -156,6 +157,7 @@ class TaskAmount(models.Model):
     garbage = models.ForeignKey(to=Garbage, verbose_name=_('garbage'), on_delete=models.SET_NULL, null=True, related_name='amount')
     amount = models.IntegerField(default=0)
     user = models.ForeignKey(to=User, verbose_name=_('user'), on_delete=models.SET_NULL, null=True, related_name='amount')
+    timestamp = models.DateTimeField(verbose_name=_('timestamp'), null=True)
 
     class Meta:
         verbose_name = _('TaskAmount')
