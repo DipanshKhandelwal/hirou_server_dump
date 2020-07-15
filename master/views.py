@@ -2,7 +2,7 @@ from django.utils import timezone
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 
-from .serializers import VehicleSerializer, CollectionPointSerializer, GarbageSerializer, CustomerSerializer, BaseRouteSerializer, BaseRouteListSerializer, TaskRouteSerializer, TaskCollectionPointSerializer, TaskCollectionSerializer, ReportTypeSerializer, TaskReportSerializer, TaskReportListSerializer, TaskAmountSerializer
+from .serializers import VehicleSerializer, CollectionPointSerializer, GarbageSerializer, CustomerSerializer, BaseRouteSerializer, BaseRouteListSerializer, TaskRouteSerializer, TaskCollectionPointSerializer, TaskCollectionSerializer, ReportTypeSerializer, TaskReportSerializer, TaskReportListSerializer, TaskAmountSerializer, TaskAmountListSerializer
 from .models import Vehicle, CollectionPoint, Garbage, ReportType, Customer, BaseRoute, TaskRoute, TaskCollectionPoint, TaskCollection, TaskReport, TaskAmount
 from rest_framework.response import Response
 
@@ -209,3 +209,9 @@ class TaskAmountViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(route=task_route)
 
         return queryset
+    
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return TaskAmountListSerializer
+
+        return TaskAmountSerializer

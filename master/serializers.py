@@ -142,8 +142,15 @@ class TaskReportListSerializer(serializers.ModelSerializer):
         fields = ['id', 'route', 'collection_point', 'report_type', 'image', 'timestamp']
 
 
-class TaskAmountSerializer(serializers.ModelSerializer):
+class TaskAmountListSerializer(serializers.ModelSerializer):
     garbage = GarbageSerializer(read_only=True)
+
+    class Meta:
+        model = TaskAmount
+        fields = ['id', 'route', 'garbage', 'amount', 'user', 'timestamp']
+
+
+class TaskAmountSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TaskAmount
