@@ -1,3 +1,5 @@
+import json
+
 from django.utils import timezone
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
@@ -77,6 +79,17 @@ class BaseRouteViewSet(viewsets.ModelViewSet):
             return BaseRouteListSerializer
 
         return BaseRouteSerializer
+
+    @action(detail=True, methods=['patch'])
+    def reorder_points(self, request, pk=None):
+        base_route = self.get_object()
+        points = self.request.data["points"]
+
+        for i, e in enumerate(points):
+            cp = CollectionPoint.objects.get(pk=e)
+            cp.sequence = i+1
+            cp.save()
+        return Response(CollectionPointSerializer(base_route.collection_point.all(), many=True).data)
 
 
 # 
