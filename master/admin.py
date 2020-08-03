@@ -1,4 +1,8 @@
+import csv
+
 from django.contrib import admin
+from django.http import HttpResponse
+
 from .models import Vehicle, Garbage, ReportType, CollectionPoint, Customer, BaseRoute, TaskRoute, TaskCollectionPoint, TaskCollection, TaskReport, TaskAmount
 
 
@@ -37,6 +41,24 @@ class BaseRouteAdmin(admin.ModelAdmin):
 class TaskCollectionAdmin(admin.ModelAdmin):
     list_display = ['collection_point', 'garbage', 'complete', 'timestamp', 'amount']
     ordering = ['collection_point', 'garbage', 'complete', 'timestamp', 'amount']
+
+    actions = ["export_as_csv"]
+
+    def export_as_csv(self, request, queryset):
+        meta = self.model._meta
+        field_names = [field.name for field in meta.fields]
+
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename={}.xls'.format(meta)
+        writer = csv.writer(response)
+
+        writer.writerow(field_names)
+        for obj in queryset:
+            row = writer.writerow([getattr(obj, field) for field in field_names])
+
+        return response
+
+    export_as_csv.short_description = "Export Selected"
 
 
 class TaskCollectionPointAdmin(admin.ModelAdmin):
