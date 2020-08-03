@@ -35,8 +35,8 @@ class BaseRouteAdmin(admin.ModelAdmin):
 
 #
 class TaskCollectionAdmin(admin.ModelAdmin):
-    list_display = ['collection_point', 'garbage', 'complete', 'amount']
-    ordering = ['collection_point', 'garbage', 'complete', 'amount']
+    list_display = ['collection_point', 'garbage', 'complete', 'timestamp', 'amount']
+    ordering = ['collection_point', 'garbage', 'complete', 'timestamp', 'amount']
 
 
 class TaskCollectionPointAdmin(admin.ModelAdmin):
