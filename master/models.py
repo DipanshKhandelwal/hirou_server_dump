@@ -106,7 +106,7 @@ class TaskRoute(models.Model):
 
 
 class TaskCollectionPoint(models.Model):
-    route = models.ForeignKey(to=TaskRoute, verbose_name=_('route'), on_delete=models.SET_NULL, null=True, related_name='task_collection_point')
+    route = models.ForeignKey(to=TaskRoute, verbose_name=_('route'), on_delete=models.CASCADE, null=True, related_name='task_collection_point')
     location = PlainLocationField(based_fields=['city'], zoom=7, verbose_name=_('location'))
     name = models.CharField(max_length=20, verbose_name=_('name'))
     address = models.CharField(max_length=100, blank=True, verbose_name=_('address'), default="")
@@ -123,7 +123,7 @@ class TaskCollectionPoint(models.Model):
 
 
 class TaskCollection(models.Model):
-    collection_point = models.ForeignKey(to=TaskCollectionPoint, verbose_name=_('collection_point'), on_delete=models.SET_NULL, null=True, related_name='task_collection')
+    collection_point = models.ForeignKey(to=TaskCollectionPoint, verbose_name=_('collection_point'), on_delete=models.CASCADE, null=True, related_name='task_collection')
     timestamp = models.DateTimeField(default=None, verbose_name=_('timestamp'), null=True)
     complete = models.BooleanField(default=False)
     amount = models.IntegerField(default=0)
@@ -144,7 +144,7 @@ class TaskCollection(models.Model):
 
 class TaskReport(models.Model):
     route = models.ForeignKey(to=TaskRoute, verbose_name=_('route'), on_delete=models.SET_NULL, null=True, related_name='report')
-    collection_point = models.ForeignKey(to=CollectionPoint, verbose_name=_('collection_point'), on_delete=models.SET_NULL, null=True, related_name='report')
+    task_collection_point = models.ForeignKey(to=TaskCollectionPoint, verbose_name=_('task_collection_point'), on_delete=models.SET_NULL, null=True, related_name='report')
     report_type = models.ForeignKey(to=ReportType, verbose_name=_('report_type'), on_delete=models.SET_NULL, null=True, related_name='report')
     image = models.FileField(verbose_name=_('image'), blank=True, null=True, upload_to='reports')
     timestamp = models.DateTimeField(verbose_name=_('timestamp'), null=True)
@@ -159,7 +159,7 @@ class TaskReport(models.Model):
         verbose_name_plural = _('TaskReports')
 
     def __str__(self):
-        return self.collection_point.name
+        return str(self.timestamp)
 
 
 class TaskAmount(models.Model):

@@ -128,18 +128,32 @@ class TaskRouteSerializer(serializers.ModelSerializer):
 
 
 class TaskReportSerializer(serializers.ModelSerializer):
+    timestamp = serializers.SerializerMethodField()
+
+    @staticmethod
+    def get_timestamp(obj):
+        if obj.timestamp is None:
+            return None
+        return obj.timestamp.ctime()
 
     class Meta:
         model = TaskReport
-        fields = ['id', 'route', 'collection_point', 'report_type', 'image']
+        fields = ['id', 'route', 'timestamp', 'task_collection_point', 'report_type', 'image']
 
 
 class TaskReportListSerializer(serializers.ModelSerializer):
     report_type = ReportTypeSerializer()
+    timestamp = serializers.SerializerMethodField()
+
+    @staticmethod
+    def get_timestamp(obj):
+        if obj.timestamp is None:
+            return None
+        return obj.timestamp.ctime()
 
     class Meta:
         model = TaskReport
-        fields = ['id', 'route', 'collection_point', 'report_type', 'image', 'timestamp']
+        fields = ['id', 'route', 'timestamp', 'task_collection_point', 'report_type', 'image', 'timestamp']
 
 
 class TaskAmountListSerializer(serializers.ModelSerializer):
