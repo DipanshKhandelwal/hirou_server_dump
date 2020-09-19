@@ -72,8 +72,8 @@ class TaskRouteAdmin(admin.ModelAdmin):
 
 
 class TaskReportAdmin(admin.ModelAdmin):
-    list_display = ['timestamp', 'report_type', 'task_collection_point', 'route', 'image']
-    ordering = ['timestamp', 'report_type', 'task_collection_point', 'route', 'image']
+    list_display = ['timestamp', 'report_type', 'task_collection_point', 'route', 'image', 'description']
+    ordering = ['timestamp', 'report_type', 'task_collection_point', 'route', 'image', 'description']
 
 
 class TaskAmountAdmin(admin.ModelAdmin):
