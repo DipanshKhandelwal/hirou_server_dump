@@ -148,6 +148,7 @@ class TaskReport(models.Model):
     report_type = models.ForeignKey(to=ReportType, verbose_name=_('report_type'), on_delete=models.SET_NULL, null=True, related_name='report')
     image = models.FileField(verbose_name=_('image'), blank=True, null=True, upload_to='reports')
     timestamp = models.DateTimeField(verbose_name=_('timestamp'), null=True)
+    description = models.CharField(max_length=200, blank=True, verbose_name=_('description'))
 
     def save(self, *args, **kwargs):
         if not self.id:
