@@ -5,6 +5,7 @@ from rest_framework import serializers
 from django.core.validators import RegexValidator
 from .models import User, Profile
 from master.models import Vehicle
+from rest_framework.authtoken.models import Token
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -13,9 +14,9 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        read_only_fields = ('id')
-        fields = ('id', 'email', 'username', 'phone_number', 'first_name', 'last_name', 'profile')
-        # fields = ('id', 'email', 'username', 'phone_number', 'first_name', 'last_name', 'profile', 'vehicle')
+        read_only_fields = ['id']
+        # fields = ['id', 'email', 'username', 'phone_number', 'first_name', 'last_name', 'profile', 'vehicle']
+        fields = ['id', 'email', 'username', 'first_name', 'last_name', 'profile']
 
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -33,6 +34,14 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     # def get_vehicle_registration_number(self, obj):
     #     return Vehicle.objects.all().filter(users=obj.user.id)[0].registration_number
+
+
+class TokenSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+
+    class Meta:
+        model = Token
+        fields = ('key', 'user')
 
 
 class CustomRegisterSerializer(RegisterSerializer):
