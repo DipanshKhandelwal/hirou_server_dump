@@ -94,8 +94,12 @@ WSGI_APPLICATION = 'hirou_server.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'hirou_develop',
+        'USER': 'hirou_admin',
+        'PASSWORD': 'Jer7ko3V3cD',
+        'HOST': 'hirou-develop.cvyp954hzdcd.us-east-2.rds.amazonaws.com',
+        'PORT': '5432',
     }
 }
 
