@@ -77,8 +77,8 @@ class TaskReportAdmin(admin.ModelAdmin):
 
 
 class TaskAmountAdmin(admin.ModelAdmin):
-    list_display = ['timestamp', 'route', 'garbage', 'amount', 'user']
-    ordering = ['timestamp', 'route', 'garbage', 'amount', 'user']
+    list_display = ['timestamp', 'route', 'garbage', 'amount', 'user', 'memo']
+    ordering = ['timestamp', 'route', 'garbage', 'amount', 'user', 'memo']
 
 
 admin.site.register(Vehicle, VehicleAdmin)
