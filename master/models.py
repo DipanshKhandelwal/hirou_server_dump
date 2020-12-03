@@ -194,7 +194,7 @@ class TaskAmount(models.Model):
     route = models.ForeignKey(to=TaskRoute, verbose_name=_('route'), on_delete=models.SET_NULL, null=True, related_name='amount')
     garbage = models.ForeignKey(to=Garbage, verbose_name=_('garbage'), on_delete=models.SET_NULL, null=True, related_name='amount')
     amount = models.IntegerField(default=0)
-    user = models.ForeignKey(to=User, verbose_name=_('user'), on_delete=models.SET_NULL, null=True, related_name='amount')
+    user = models.ForeignKey(to=User, verbose_name=_('user'), on_delete=models.SET_NULL, null=True, related_name='amount', blank=True, default=None)
     timestamp = models.DateTimeField(verbose_name=_('timestamp'), null=True)
     memo = models.CharField(max_length=200, blank=True, verbose_name=_('memo'))
 
