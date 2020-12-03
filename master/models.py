@@ -196,6 +196,7 @@ class TaskAmount(models.Model):
     amount = models.IntegerField(default=0)
     user = models.ForeignKey(to=User, verbose_name=_('user'), on_delete=models.SET_NULL, null=True, related_name='amount')
     timestamp = models.DateTimeField(verbose_name=_('timestamp'), null=True)
+    memo = models.CharField(max_length=200, blank=True, verbose_name=_('memo'))
 
     def save(self, *args, **kwargs):
         if not self.id:
