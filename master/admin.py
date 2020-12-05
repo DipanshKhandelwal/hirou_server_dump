@@ -9,7 +9,7 @@ from .models import Vehicle, Garbage, ReportType, CollectionPoint, Customer, Bas
 class VehicleAdmin(admin.ModelAdmin):
     list_display = ['registration_number', 'model']
     ordering = ['registration_number', 'model']
-    fields = ['registration_number', 'location', 'model']
+    fields = ['registration_number', 'model']
 
 
 class CollectionPointAdmin(admin.ModelAdmin):
@@ -77,8 +77,8 @@ class TaskReportAdmin(admin.ModelAdmin):
 
 
 class TaskAmountAdmin(admin.ModelAdmin):
-    list_display = ['timestamp', 'route', 'garbage', 'amount', 'user', 'memo']
-    ordering = ['timestamp', 'route', 'garbage', 'amount', 'user', 'memo']
+    list_display = ['timestamp', 'route', 'garbage', 'amount', 'user', 'vehicle', 'memo']
+    ordering = ['timestamp', 'route', 'garbage', 'amount', 'user', 'vehicle', 'memo']
 
 
 admin.site.register(Vehicle, VehicleAdmin)

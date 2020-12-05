@@ -9,7 +9,7 @@ from django.dispatch import receiver
 
 
 class Vehicle(models.Model):
-    location = PlainLocationField(based_fields=['city'], zoom=7, null=True, verbose_name=_('location'))
+    # location = PlainLocationField(based_fields=['city'], zoom=7, null=True, verbose_name=_('location'))
     registration_number = models.CharField(max_length=15, unique=True, verbose_name=_('registration_number'))
     model = models.CharField(max_length=20, blank=True, verbose_name=_('model'))
     # users = models.ManyToManyField(to=User, blank=True, related_name='vehicle', verbose_name=_('users'))
@@ -192,6 +192,7 @@ def task_report_saved(sender, instance, created, **kwargs):
 
 class TaskAmount(models.Model):
     route = models.ForeignKey(to=TaskRoute, verbose_name=_('route'), on_delete=models.SET_NULL, null=True, related_name='amount')
+    vehicle = models.ForeignKey(to=Vehicle, on_delete=None, related_name='amount', null=True, verbose_name=_('vehicle'), blank=True)
     garbage = models.ForeignKey(to=Garbage, verbose_name=_('garbage'), on_delete=models.SET_NULL, null=True, related_name='amount')
     amount = models.IntegerField(default=0)
     user = models.ForeignKey(to=User, verbose_name=_('user'), on_delete=models.SET_NULL, null=True, related_name='amount', blank=True, default=None)
