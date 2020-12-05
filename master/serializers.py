@@ -26,8 +26,7 @@ class VehicleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Vehicle
-        fields = ['id', 'registration_number', 'model', 'location']
-        # fields = ['id', 'registration_number', 'model', 'location', 'pickup']
+        fields = ['id', 'registration_number', 'model']
 
 
 class CollectionPointSerializer(serializers.ModelSerializer):

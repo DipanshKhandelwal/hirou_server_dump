@@ -9,7 +9,7 @@ from .models import Vehicle, Garbage, ReportType, CollectionPoint, Customer, Bas
 class VehicleAdmin(admin.ModelAdmin):
     list_display = ['registration_number', 'model']
     ordering = ['registration_number', 'model']
-    fields = ['registration_number', 'location', 'model']
+    fields = ['registration_number', 'model']
 
 
 class CollectionPointAdmin(admin.ModelAdmin):

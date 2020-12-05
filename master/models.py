@@ -9,7 +9,7 @@ from django.dispatch import receiver
 
 
 class Vehicle(models.Model):
-    location = PlainLocationField(based_fields=['city'], zoom=7, null=True, verbose_name=_('location'))
+    # location = PlainLocationField(based_fields=['city'], zoom=7, null=True, verbose_name=_('location'))
     registration_number = models.CharField(max_length=15, unique=True, verbose_name=_('registration_number'))
     model = models.CharField(max_length=20, blank=True, verbose_name=_('model'))
     # users = models.ManyToManyField(to=User, blank=True, related_name='vehicle', verbose_name=_('users'))
