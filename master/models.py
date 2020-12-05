@@ -192,6 +192,7 @@ def task_report_saved(sender, instance, created, **kwargs):
 
 class TaskAmount(models.Model):
     route = models.ForeignKey(to=TaskRoute, verbose_name=_('route'), on_delete=models.SET_NULL, null=True, related_name='amount')
+    vehicle = models.ForeignKey(to=Vehicle, on_delete=None, related_name='amount', null=True, verbose_name=_('vehicle'), blank=True)
     garbage = models.ForeignKey(to=Garbage, verbose_name=_('garbage'), on_delete=models.SET_NULL, null=True, related_name='amount')
     amount = models.IntegerField(default=0)
     user = models.ForeignKey(to=User, verbose_name=_('user'), on_delete=models.SET_NULL, null=True, related_name='amount', blank=True, default=None)
