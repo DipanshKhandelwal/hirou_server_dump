@@ -157,10 +157,11 @@ class TaskReportListSerializer(serializers.ModelSerializer):
 
 class TaskAmountListSerializer(serializers.ModelSerializer):
     garbage = GarbageSerializer(read_only=True)
+    vehicle = VehicleSerializer(read_only=True)
 
     class Meta:
         model = TaskAmount
-        fields = ['id', 'route', 'garbage', 'amount', 'user', 'timestamp', 'memo']
+        fields = ['id', 'route', 'garbage', 'amount', 'user', 'timestamp', 'memo', 'vehicle']
 
 
 class TaskAmountSerializer(serializers.ModelSerializer):
