@@ -160,6 +160,13 @@ class TaskAmountListSerializer(serializers.ModelSerializer):
     garbage = GarbageSerializer(read_only=True)
     vehicle = VehicleSerializer(read_only=True)
     user = UserSerializer(read_only=True)
+    timestamp = serializers.SerializerMethodField()
+
+    @staticmethod
+    def get_timestamp(obj):
+        if obj.timestamp is None:
+            return None
+        return obj.timestamp.ctime()
 
     class Meta:
         model = TaskAmount
