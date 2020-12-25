@@ -3,10 +3,12 @@ import json
 from django.utils import timezone
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
+from rest_framework.exceptions import ValidationError
 
 from .serializers import VehicleSerializer, CollectionPointSerializer, GarbageSerializer, CustomerSerializer, BaseRouteSerializer, BaseRouteListSerializer, TaskRouteSerializer, TaskCollectionPointSerializer, TaskCollectionSerializer, ReportTypeSerializer, TaskReportSerializer, TaskReportListSerializer, TaskAmountSerializer, TaskAmountListSerializer
 from .models import Vehicle, CollectionPoint, Garbage, ReportType, Customer, BaseRoute, TaskRoute, TaskCollectionPoint, TaskCollection, TaskReport, TaskAmount
 from rest_framework.response import Response
+from django.contrib.auth.models import User
 
 
 class VehicleViewSet(viewsets.ModelViewSet):
@@ -213,6 +215,28 @@ class TaskAmountViewSet(viewsets.ModelViewSet):
     """
     serializer_class = TaskAmountSerializer
     queryset = TaskAmount.objects.all()
+
+    def perform_create(self, serializer):
+        task_amount = serializer.save()
+
+        if self.request.user.id:
+            user_id = self.request.user.id
+            user = User.objects.get(id=user_id)
+            task_amount.user = user
+            task_amount.save()
+
+    def perform_update(self, serializer):
+        try:
+            user_id = self.request.user.id
+            serializer.is_valid(raise_exception=True)
+            if user_id:
+                user = User.objects.get(id=user_id)
+                serializer.save(user=user)
+            else:
+                serializer.save()
+        except ValidationError:
+            return Response({"errors": (serializer.errors,)},
+                            status=status.HTTP_400_BAD_REQUEST)
 
     def get_queryset(self):
         queryset = TaskAmount.objects.all()

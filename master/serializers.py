@@ -170,6 +170,7 @@ class TaskAmountListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TaskAmount
+        read_only_fields = ['id', 'user', 'timestamp']
         fields = ['id', 'route', 'garbage', 'amount', 'user', 'timestamp', 'memo', 'vehicle']
 
 
@@ -177,4 +178,5 @@ class TaskAmountSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TaskAmount
+        read_only_fields = ['id', 'user', 'timestamp']
         fields = ['id', 'route', 'garbage', 'amount', 'user', 'timestamp', 'memo', 'vehicle']
