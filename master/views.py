@@ -81,6 +81,11 @@ class BaseRouteViewSet(viewsets.ModelViewSet):
             return BaseRouteListSerializer
 
         return BaseRouteSerializer
+    
+    @action(detail=True, methods=['post'])
+    def copy(self, request, pk=None):
+
+        return Response(BaseRouteSerializer(new_base_route).data)
 
     @action(detail=True, methods=['patch'])
     def reorder_points(self, request, pk=None):
