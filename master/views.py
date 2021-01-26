@@ -81,6 +81,33 @@ class BaseRouteViewSet(viewsets.ModelViewSet):
             return BaseRouteListSerializer
 
         return BaseRouteSerializer
+    
+    @action(detail=True, methods=['post'])
+    def copy(self, request, pk=None):
+        base_route = self.get_object()
+
+        new_base_route = BaseRoute(name=base_route.name + ' のコピー', customer = base_route.customer)
+        new_base_route.save()
+
+        garbages = base_route.garbage.all()
+        new_base_route.garbage.add(*garbages)
+
+        collection_points = base_route.collection_point.all()
+
+        for cp in collection_points:
+            new_collection_point = CollectionPoint()
+            new_collection_point.location = cp.location
+            new_collection_point.route = new_base_route
+            new_collection_point.name = cp.name
+            new_collection_point.address = cp.address
+            new_collection_point.memo = cp.memo
+            new_collection_point.sequence = cp.sequence
+            new_collection_point.image = cp.image
+            new_collection_point.save()
+
+        new_base_route.save()
+
+        return Response(BaseRouteSerializer(new_base_route).data)
 
     @action(detail=True, methods=['patch'])
     def reorder_points(self, request, pk=None):
