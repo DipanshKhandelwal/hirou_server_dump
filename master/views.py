@@ -41,6 +41,22 @@ class CollectionPointViewSet(viewsets.ModelViewSet):
     serializer_class = CollectionPointSerializer
     queryset = CollectionPoint.objects.all()
 
+    def perform_create(self, serializer):
+        if serializer.is_valid():
+            base_route_id = self.request.data["route"]
+            route = BaseRoute.objects.get(id=base_route_id)
+            collection_points = route.collection_point.all()
+            last_cp = max(collection_points, key=lambda x: int(x.sequence))
+            serializer.save(sequence=last_cp.sequence+1)
+
+    def perform_destroy(self, instance):
+        super().perform_destroy(instance)
+        base_route = instance.route
+        collection_points = base_route.collection_point.all()
+        for i, e in enumerate(sorted(collection_points, key=lambda x: x.sequence)):
+            e.sequence = i+1
+            e.save()
+
 
 class GarbageViewSet(viewsets.ModelViewSet):
     """
