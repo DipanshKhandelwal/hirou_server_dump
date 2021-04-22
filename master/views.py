@@ -1,5 +1,3 @@
-import json
-
 from django.utils import timezone
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
@@ -9,6 +7,9 @@ from .serializers import VehicleSerializer, CollectionPointSerializer, GarbageSe
 from .models import Vehicle, CollectionPoint, Garbage, ReportType, Customer, BaseRoute, TaskRoute, TaskCollectionPoint, TaskCollection, TaskReport, TaskAmount
 from rest_framework.response import Response
 from django.contrib.auth.models import User
+
+from master.consumers.helpers import send_update_to_socket
+from .consumers.constants import SocketEventTypes, SocketChannels, SocketSubEventTypes
 
 
 class VehicleViewSet(viewsets.ModelViewSet):
@@ -48,6 +49,12 @@ class CollectionPointViewSet(viewsets.ModelViewSet):
             collection_points = route.collection_point.all()
             last_cp = max(collection_points, key=lambda x: int(x.sequence))
             serializer.save(sequence=last_cp.sequence+1)
+
+            # TODO: Change this with updated object
+            data = {"id": base_route_id}
+
+            send_update_to_socket(SocketEventTypes.BASE_ROUTE, SocketSubEventTypes.UPDATE,
+                                  SocketChannels.COLLECTION_POINT_CHANNEL, data)
 
     def perform_destroy(self, instance):
         super().perform_destroy(instance)
