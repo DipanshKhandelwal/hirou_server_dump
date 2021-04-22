@@ -102,6 +102,14 @@ class BaseRouteViewSet(viewsets.ModelViewSet):
     # serializer_class = BaseRouteSerializer
     queryset = BaseRoute.objects.all()
 
+    def perform_update(self, serializer):
+        instance = serializer.save(user=self.request.user)
+        # data = BaseRouteSerializer(instance).data
+        data = {"id": instance.id}
+
+        send_update_to_socket(SocketEventTypes.BASE_ROUTE, SocketSubEventTypes.UPDATE,
+                              SocketChannels.COLLECTION_POINT_CHANNEL, data)
+
     def get_serializer_class(self):
         if self.action == 'list':
             return BaseRouteListSerializer
