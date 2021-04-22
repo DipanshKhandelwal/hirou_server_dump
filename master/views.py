@@ -64,6 +64,12 @@ class CollectionPointViewSet(viewsets.ModelViewSet):
             e.sequence = i+1
             e.save()
 
+        # TODO: Change this with updated object
+        data = {"id": base_route.id}
+
+        send_update_to_socket(SocketEventTypes.BASE_ROUTE, SocketSubEventTypes.UPDATE,
+                              SocketChannels.COLLECTION_POINT_CHANNEL, data)
+
 
 class GarbageViewSet(viewsets.ModelViewSet):
     """
