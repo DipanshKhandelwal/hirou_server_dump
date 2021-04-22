@@ -272,6 +272,15 @@ class TaskCollectionViewSet(viewsets.ModelViewSet):
     serializer_class = TaskCollectionSerializer
     queryset = TaskCollection.objects.all()
 
+    def perform_update(self, serializer):
+        instance = serializer.save(user=self.request.user)
+
+        # data = BaseRouteSerializer(instance).data
+        data = {"id": instance.collection_point.route.id}
+
+        send_update_to_socket(SocketEventTypes.TASK_ROUTE, SocketSubEventTypes.UPDATE,
+                              SocketChannels.TASK_COLLECTION_POINT_CHANNEL, data)
+
 
 class TaskReportViewSet(viewsets.ModelViewSet):
     """
