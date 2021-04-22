@@ -44,6 +44,9 @@ PyHamcrest = "==1.9.0"
 "zope.interface" = "==4.6.0"
 django-storages = "*"
 boto3 = "*"
+channels = "*"
+setuptools = "==45"
+channels-redis = "*"
 
 [requires]
 python_version = "3.7"
