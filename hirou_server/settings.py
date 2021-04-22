@@ -49,10 +49,21 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'location_field.apps.DefaultConfig',
     'storages',
+    'channels',
 
     'users',
     'master',
 ]
+
+ASGI_APPLICATION = "hirou_server.asgi.application"
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
