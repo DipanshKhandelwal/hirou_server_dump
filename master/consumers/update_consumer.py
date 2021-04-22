@@ -11,4 +11,7 @@ class UpdateConsumer(AsyncJsonWebsocketConsumer):
             await self.channel_layer.group_add(channel, self.channel_name)
 
     async def disconnect(self, code):
+        for channel in SocketChannels.get_all():
+            await self.channel_layer.group_add(channel, self.channel_name)
+        await self.send_json({'success': True})
         await self.close()
