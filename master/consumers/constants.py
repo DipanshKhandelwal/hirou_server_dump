@@ -18,3 +18,8 @@ class SocketSubEventTypes:
     REORDER = 'reorder'
     UPDATE = 'update'
     CREATE = 'create'
+
+
+class SocketUpdateTypes:
+    SUBSCRIBE = 'subscribe'
+    UNSUBSCRIBE = 'unsubscribe'
