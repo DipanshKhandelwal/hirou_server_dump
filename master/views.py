@@ -226,6 +226,15 @@ class TaskCollectionPointViewSet(viewsets.ModelViewSet):
     serializer_class = TaskCollectionPointSerializer
     queryset = TaskCollectionPoint.objects.all()
 
+    def perform_update(self, serializer):
+        instance = serializer.save(user=self.request.user)
+
+        # data = BaseRouteSerializer(instance).data
+        data = {"id": instance.route.id}
+
+        send_update_to_socket(SocketEventTypes.TASK_ROUTE, SocketSubEventTypes.UPDATE,
+                              SocketChannels.TASK_COLLECTION_POINT_CHANNEL, data)
+
     @action(detail=True, methods=['patch'])
     def bulk_complete(self, request, pk=None):
         task_c_p = self.get_object()
