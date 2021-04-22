@@ -20,3 +20,8 @@ class UpdateConsumer(AsyncJsonWebsocketConsumer):
         data = event['data']
         if data:
             await self.send_json(data)
+
+    async def receive_json(self, content, **kwargs):
+        print("content", content)
+        # TODO: Handle subscribe and unsubscribe to channels
+        pass
