@@ -15,3 +15,8 @@ class UpdateConsumer(AsyncJsonWebsocketConsumer):
             await self.channel_layer.group_add(channel, self.channel_name)
         await self.send_json({'success': True})
         await self.close()
+
+    async def websocket_ingest(self, event):
+        data = event['data']
+        if data:
+            await self.send_json(data)
