@@ -107,7 +107,7 @@ class Migration(migrations.Migration):
                 ('collection_point', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='task_collection', to='master.TaskCollectionPoint', verbose_name='collection_point')),
                 ('garbage', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='master.Garbage', verbose_name='garbage')),
                 ('users', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL, verbose_name='users')),
-                ('vehicle', models.ForeignKey(null=True, on_delete=None, related_name='collection', to='master.Vehicle', verbose_name='vehicle')),
+                ('vehicle', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='collection', to='master.Vehicle', verbose_name='vehicle')),
             ],
             options={
                 'verbose_name': 'TaskCollection',
