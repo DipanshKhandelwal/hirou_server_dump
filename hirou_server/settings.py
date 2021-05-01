@@ -104,7 +104,7 @@ DATABASES = {
     }
 }
 
-REDIS_PUBLIC_DNS = "hirou-redis-develop.jsgffk.0001.use2.cache.amazonaws.com"
+REDIS_PUBLIC_DNS = "hirou-redis-develop-us-east-2c.jsgffk.0001.use2.cache.amazonaws.com"
 
 CHANNEL_LAYERS = {
     'default': {
