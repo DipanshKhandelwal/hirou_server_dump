@@ -242,10 +242,8 @@ class TaskCollectionPointViewSet(viewsets.ModelViewSet):
 
             tc.save()
 
-        # TODO: Change this with updated object
-        data = {"id": task_c_p.route.id}
-
-        send_update_to_socket(SocketEventTypes.TASK_ROUTE, SocketSubEventTypes.REORDER,
+        data = TaskCollectionPointSerializer(task_c_p).data
+        send_update_to_socket(SocketEventTypes.TASK_COLLECTION_POINT, SocketSubEventTypes.BULK_COMPLETE,
                               SocketChannels.TASK_COLLECTION_POINT_CHANNEL, data)
 
         return Response(TaskCollectionSerializer(task_c_p.task_collection.all(), many=True).data)
