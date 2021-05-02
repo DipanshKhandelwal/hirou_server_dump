@@ -156,13 +156,12 @@ class BaseRouteViewSet(viewsets.ModelViewSet):
             cp.sequence = i+1
             cp.save()
 
-        # TODO: Change this with updated object
-        data = {"id": base_route.id}
+        data = BaseRouteListSerializer(base_route).data
 
         send_update_to_socket(SocketEventTypes.BASE_ROUTE, SocketSubEventTypes.REORDER,
                               SocketChannels.COLLECTION_POINT_CHANNEL, data)
 
-        return Response(CollectionPointSerializer(base_route.collection_point.all(), many=True).data)
+        return Response(BaseRouteListSerializer(base_route).data)
 
 
 # 
