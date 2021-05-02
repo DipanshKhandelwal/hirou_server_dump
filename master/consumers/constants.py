@@ -17,6 +17,7 @@ class SocketEventTypes:
 
 class SocketSubEventTypes:
     REORDER = 'reorder'
+    BULK_COMPLETE = 'bulk-complete'
     UPDATE = 'update'
     CREATE = 'create'
     DELETE = 'delete'
