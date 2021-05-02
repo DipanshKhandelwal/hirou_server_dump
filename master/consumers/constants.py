@@ -18,6 +18,7 @@ class SocketSubEventTypes:
     REORDER = 'reorder'
     UPDATE = 'update'
     CREATE = 'create'
+    DELETE = 'delete'
 
 
 class SocketUpdateTypes:
