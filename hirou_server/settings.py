@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'location_field.apps.DefaultConfig',
     'storages',
+    'channels',
 
     'users',
     'master',
@@ -87,7 +88,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'hirou_server.wsgi.application'
-
+ASGI_APPLICATION = "hirou_server.asgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
@@ -101,6 +102,17 @@ DATABASES = {
         'HOST': 'hirou-develop.cvyp954hzdcd.us-east-2.rds.amazonaws.com',
         'PORT': '5432',
     }
+}
+
+REDIS_PUBLIC_DNS = "hirou-redis-develop-us-east-2c.jsgffk.0001.use2.cache.amazonaws.com"
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [(REDIS_PUBLIC_DNS, 6379)],
+        },
+    },
 }
 
 LOCATION_FIELD = {
@@ -173,6 +185,8 @@ REST_FRAMEWORK = {
 }
 
 CSRF_COOKIE_NAME = "csrftoken"
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_REQUIRED = False

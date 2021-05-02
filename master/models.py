@@ -1,4 +1,3 @@
-import requests
 from django.db import models
 from django.utils import timezone
 from location_field.models.plain import PlainLocationField
@@ -132,7 +131,7 @@ class TaskCollection(models.Model):
     amount = models.IntegerField(default=0)
     image = models.FileField(blank=True, null=True, verbose_name=_('image'))
     users = models.ForeignKey(to=User, blank=True, verbose_name=_('users'), on_delete=models.SET_NULL, null=True)
-    vehicle = models.ForeignKey(to=Vehicle, on_delete=None, related_name='collection', null=True,
+    vehicle = models.ForeignKey(to=Vehicle, on_delete=models.SET_NULL, related_name='collection', null=True,
                                 verbose_name=_('vehicle'))
     garbage = models.ForeignKey(to=Garbage, verbose_name=_('garbage'), on_delete=models.SET_NULL, null=True)
     available = models.BooleanField(default=False)
@@ -192,7 +191,7 @@ def task_report_saved(sender, instance, created, **kwargs):
 
 class TaskAmount(models.Model):
     route = models.ForeignKey(to=TaskRoute, verbose_name=_('route'), on_delete=models.SET_NULL, null=True, related_name='amount')
-    vehicle = models.ForeignKey(to=Vehicle, on_delete=None, related_name='amount', null=True, verbose_name=_('vehicle'), blank=True)
+    vehicle = models.ForeignKey(to=Vehicle, on_delete=models.SET_NULL, related_name='amount', null=True, verbose_name=_('vehicle'), blank=True)
     garbage = models.ForeignKey(to=Garbage, verbose_name=_('garbage'), on_delete=models.SET_NULL, null=True, related_name='amount')
     amount = models.IntegerField(default=0)
     user = models.ForeignKey(to=User, verbose_name=_('user'), on_delete=models.SET_NULL, null=True, related_name='amount', blank=True, default=None)
