@@ -74,7 +74,7 @@ ROOT_URLCONF = 'hirou_server.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, '../templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -89,31 +89,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'hirou_server.wsgi.application'
 ASGI_APPLICATION = "hirou_server.asgi.application"
-
-# Database
-# https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'hirou_develop',
-        'USER': 'hirou_admin',
-        'PASSWORD': 'Jer7ko3V3cD',
-        'HOST': 'hirou-develop.cvyp954hzdcd.us-east-2.rds.amazonaws.com',
-        'PORT': '5432',
-    }
-}
-
-REDIS_PUBLIC_DNS = "hirou-redis-develop-us-east-2c.jsgffk.0001.use2.cache.amazonaws.com"
-
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [(REDIS_PUBLIC_DNS, 6379)],
-        },
-    },
-}
 
 LOCATION_FIELD = {
     'map.provider': 'mapbox',
@@ -148,7 +123,7 @@ LANGUAGE_CODE = 'en'
 
 TIME_ZONE = 'Asia/Kolkata'
 
-LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
+LOCALE_PATHS = [os.path.join(BASE_DIR, '../locale')]
 
 LANGUAGES = [
     ('en', _('English')),
@@ -167,22 +142,13 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, '../staticfiles/')
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_ROOT = os.path.join(BASE_DIR, '../media/')
 
 MEDIA_URL = '/media/'
 
 SITE_ID = 1
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
-    ),
-}
 
 CSRF_COOKIE_NAME = "csrftoken"
 
