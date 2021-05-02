@@ -50,11 +50,17 @@ class CollectionPointViewSet(viewsets.ModelViewSet):
             last_cp = max(collection_points, key=lambda x: int(x.sequence))
             serializer.save(sequence=last_cp.sequence+1)
 
-            # TODO: Change this with updated object
-            data = {"id": base_route_id}
-
-            send_update_to_socket(SocketEventTypes.BASE_ROUTE, SocketSubEventTypes.UPDATE,
+            data = BaseRouteListSerializer(route).data
+            send_update_to_socket(SocketEventTypes.COLLECTION_POINT, SocketSubEventTypes.CREATE,
                                   SocketChannels.COLLECTION_POINT_CHANNEL, data)
+
+    def perform_update(self, serializer):
+        instance = serializer.save(user=self.request.user)
+        base_route = instance.route
+
+        data = BaseRouteListSerializer(base_route).data
+        send_update_to_socket(SocketEventTypes.COLLECTION_POINT, SocketSubEventTypes.UPDATE,
+                              SocketChannels.COLLECTION_POINT_CHANNEL, data)
 
     def perform_destroy(self, instance):
         super().perform_destroy(instance)
@@ -64,10 +70,8 @@ class CollectionPointViewSet(viewsets.ModelViewSet):
             e.sequence = i+1
             e.save()
 
-        # TODO: Change this with updated object
-        data = {"id": base_route.id}
-
-        send_update_to_socket(SocketEventTypes.BASE_ROUTE, SocketSubEventTypes.UPDATE,
+        data = BaseRouteListSerializer(base_route).data
+        send_update_to_socket(SocketEventTypes.COLLECTION_POINT, SocketSubEventTypes.DELETE,
                               SocketChannels.COLLECTION_POINT_CHANNEL, data)
 
 
@@ -101,14 +105,6 @@ class BaseRouteViewSet(viewsets.ModelViewSet):
     """
     # serializer_class = BaseRouteSerializer
     queryset = BaseRoute.objects.all()
-
-    def perform_update(self, serializer):
-        instance = serializer.save(user=self.request.user)
-        # data = BaseRouteSerializer(instance).data
-        data = {"id": instance.id}
-
-        send_update_to_socket(SocketEventTypes.BASE_ROUTE, SocketSubEventTypes.UPDATE,
-                              SocketChannels.COLLECTION_POINT_CHANNEL, data)
 
     def get_serializer_class(self):
         if self.action == 'list':
