@@ -67,8 +67,8 @@ class TaskCollectionPointAdmin(admin.ModelAdmin):
 
 
 class TaskRouteAdmin(admin.ModelAdmin):
-    list_display = ['name', 'customer', 'date']
-    ordering = ['name', 'customer', 'date']
+    list_display = ['name', 'customer', 'date', 'base_route_name']
+    ordering = ['name', 'customer', 'date', 'base_route_name']
 
 
 class TaskReportAdmin(admin.ModelAdmin):
