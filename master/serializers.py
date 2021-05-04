@@ -124,7 +124,7 @@ class TaskRouteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TaskRoute
-        fields = ['id', 'name', 'customer', 'garbage', 'date', 'task_collection_point']
+        fields = ['id', 'name', 'customer', 'garbage', 'date', 'task_collection_point', 'base_route_name']
 
 
 class TaskReportSerializer(serializers.ModelSerializer):

@@ -183,6 +183,7 @@ class TaskRouteViewSet(viewsets.ModelViewSet):
         route = BaseRoute.objects.get(id=base_route_id)
         new_task_route = TaskRoute(name=new_task_name)
         new_task_route.customer = route.customer
+        new_task_route.base_route_name = route.name
 
         new_task_route.save()
 

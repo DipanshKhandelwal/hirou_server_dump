@@ -90,6 +90,7 @@ class CollectionPoint(models.Model):
 class TaskRoute(models.Model):
     date = models.DateField()
     name = models.CharField(max_length=30, verbose_name=_('name'))
+    base_route_name = models.CharField(max_length=30, verbose_name=_('base_route_name'), default='', blank=True)
     customer = models.ForeignKey(to=Customer, verbose_name=_('customer'), on_delete=models.SET_NULL, null=True, related_name='task_route')
     garbage = models.ManyToManyField(to=Garbage, verbose_name=_('garbage'), blank=True, related_name='task_route',)
     vehicle = models.ForeignKey(to=Vehicle, on_delete=models.SET_NULL, related_name='task_route', null=True, verbose_name=_('vehicle'))
