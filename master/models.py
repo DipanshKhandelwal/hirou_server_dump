@@ -9,8 +9,8 @@ from django.dispatch import receiver
 
 class Vehicle(models.Model):
     # location = PlainLocationField(based_fields=['city'], zoom=7, null=True, verbose_name=_('location'))
-    registration_number = models.CharField(max_length=15, unique=True, verbose_name=_('registration_number'))
-    model = models.CharField(max_length=20, blank=True, verbose_name=_('model'))
+    registration_number = models.CharField(max_length=30, unique=True, verbose_name=_('registration_number'))
+    model = models.CharField(max_length=30, blank=True, verbose_name=_('model'))
     # users = models.ManyToManyField(to=User, blank=True, related_name='vehicle', verbose_name=_('users'))
 
     class Meta:
@@ -22,7 +22,7 @@ class Vehicle(models.Model):
 
 
 class Customer(models.Model):
-    name = models.CharField(max_length=20, verbose_name=_('name'))
+    name = models.CharField(max_length=50, verbose_name=_('name'))
     description = models.CharField(max_length=100, blank=True, verbose_name=_('description'))
 
     class Meta:
@@ -34,7 +34,7 @@ class Customer(models.Model):
 
 
 class Garbage(models.Model):
-    name = models.CharField(max_length=20, unique=True, verbose_name=_('name'))
+    name = models.CharField(max_length=50, unique=True, verbose_name=_('name'))
     description = models.CharField(max_length=100, blank=True, verbose_name=_('description'))
 
     class Meta:
@@ -46,7 +46,7 @@ class Garbage(models.Model):
 
 
 class ReportType(models.Model):
-    name = models.CharField(max_length=20, unique=True, verbose_name=_('name'))
+    name = models.CharField(max_length=50, unique=True, verbose_name=_('name'))
     description = models.CharField(max_length=100, blank=True, verbose_name=_('description'))
 
     class Meta:
@@ -58,7 +58,7 @@ class ReportType(models.Model):
 
 
 class BaseRoute(models.Model):
-    name = models.CharField(max_length=30, verbose_name=_('name'))
+    name = models.CharField(max_length=80, verbose_name=_('name'))
     customer = models.ForeignKey(to=Customer, verbose_name=_('customer'), on_delete=models.SET_NULL, null=True, related_name='route')
     garbage = models.ManyToManyField(to=Garbage, verbose_name=_('garbage'), related_name='route', blank=True)
 
@@ -73,7 +73,7 @@ class BaseRoute(models.Model):
 class CollectionPoint(models.Model):
     route = models.ForeignKey(to=BaseRoute, verbose_name=_('route'), on_delete=models.CASCADE, null=True, related_name='collection_point')
     location = PlainLocationField(based_fields=['city'], zoom=7, verbose_name=_('location'))
-    name = models.CharField(max_length=20, verbose_name=_('name'))
+    name = models.CharField(max_length=80, verbose_name=_('name'))
     address = models.CharField(max_length=100, blank=True, verbose_name=_('address'), default="")
     memo = models.CharField(max_length=100, blank=True, verbose_name=_('memo'), default="")
     sequence = models.IntegerField(verbose_name=_('sequence'), null=True)
@@ -89,8 +89,8 @@ class CollectionPoint(models.Model):
 
 class TaskRoute(models.Model):
     date = models.DateField()
-    name = models.CharField(max_length=30, verbose_name=_('name'))
-    base_route_name = models.CharField(max_length=30, verbose_name=_('base_route_name'), default='', blank=True)
+    name = models.CharField(max_length=100, verbose_name=_('name'))
+    base_route_name = models.CharField(max_length=80, verbose_name=_('base_route_name'), default='', blank=True)
     customer = models.ForeignKey(to=Customer, verbose_name=_('customer'), on_delete=models.SET_NULL, null=True, related_name='task_route')
     garbage = models.ManyToManyField(to=Garbage, verbose_name=_('garbage'), blank=True, related_name='task_route',)
     vehicle = models.ForeignKey(to=Vehicle, on_delete=models.SET_NULL, related_name='task_route', null=True, verbose_name=_('vehicle'))
@@ -111,7 +111,7 @@ class TaskRoute(models.Model):
 class TaskCollectionPoint(models.Model):
     route = models.ForeignKey(to=TaskRoute, verbose_name=_('route'), on_delete=models.CASCADE, null=True, related_name='task_collection_point')
     location = PlainLocationField(based_fields=['city'], zoom=7, verbose_name=_('location'))
-    name = models.CharField(max_length=20, verbose_name=_('name'))
+    name = models.CharField(max_length=80, verbose_name=_('name'))
     address = models.CharField(max_length=100, blank=True, verbose_name=_('address'), default="")
     memo = models.CharField(max_length=100, blank=True, verbose_name=_('memo'), default="")
     sequence = models.IntegerField(verbose_name=_('sequence'))
