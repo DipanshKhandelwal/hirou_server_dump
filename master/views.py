@@ -47,8 +47,11 @@ class CollectionPointViewSet(viewsets.ModelViewSet):
             base_route_id = self.request.data["route"]
             route = BaseRoute.objects.get(id=base_route_id)
             collection_points = route.collection_point.all()
-            last_cp = max(collection_points, key=lambda x: int(x.sequence))
-            serializer.save(sequence=last_cp.sequence+1)
+            if len(collection_points) > 0:
+                last_cp = max(collection_points, key=lambda x: int(x.sequence))
+                serializer.save(sequence=last_cp.sequence+1)
+            else:
+                serializer.save(sequence=1)
 
             data = BaseRouteListSerializer(route).data
             send_update_to_socket(SocketEventTypes.COLLECTION_POINT, SocketSubEventTypes.CREATE,
