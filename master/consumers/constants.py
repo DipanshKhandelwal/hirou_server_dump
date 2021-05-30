@@ -1,10 +1,12 @@
 class SocketChannels:
-    COLLECTION_POINT_CHANNEL = 'collection-point-channel'
-    TASK_COLLECTION_POINT_CHANNEL = 'task-collection-point-channel'
+    BASE_ROUTE = 'base-route'
+    TASK_ROUTE = 'task-route'
 
-    @classmethod
-    def get_all(cls):
-        return [cls.COLLECTION_POINT_CHANNEL, cls.TASK_COLLECTION_POINT_CHANNEL]
+
+class SocketKeys:
+    EVENT = 'event'
+    SUB_EVENT = 'sub-event'
+    DATA = 'data'
 
 
 class SocketEventTypes:
@@ -13,6 +15,7 @@ class SocketEventTypes:
     COLLECTION_POINT = 'collection-point'
     TASK_COLLECTION_POINT = 'task-collection-point'
     TASK_COLLECTION = 'task-collection'
+    LOCATION = 'location'
 
 
 class SocketSubEventTypes:
