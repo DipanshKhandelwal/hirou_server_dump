@@ -31,7 +31,9 @@ class RouteConsumer(AsyncJsonWebsocketConsumer):
         user = self.scope["user"]
         await self.channel_layer.group_discard(group, self.channel_name)
         await self.send_json({'success': True})
-        RouteConsumer.present_users[group].pop(str(user.id), None)
+
+        if RouteConsumer.present_users.get(group, 0) is not 0:
+            RouteConsumer.present_users[group].pop(str(user.id), None)
         await self.close()
 
     async def websocket_ingest(self, event):
