@@ -36,6 +36,14 @@ class RouteConsumer(AsyncJsonWebsocketConsumer):
         if data:
             await self.send_json(data)
 
+    async def locations_update(self, event):
+        data = event['data']
+        try:
+            if data:
+                await self.send_json(data)
+        except:
+            pass
+
     async def receive_json(self, content, **kwargs):
         try:
             event = content[SocketKeys.EVENT]
