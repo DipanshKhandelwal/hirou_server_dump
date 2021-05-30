@@ -22,3 +22,10 @@ def send_update_to_socket(event, sub_event, channel, data):
         )
     except:
         print("Error sending socket message")
+
+
+def get_channel_group_name(channel_type, route_id):
+    if channel_type == SocketChannels.BASE_ROUTE:
+        return "base_route_%s" % route_id
+    elif channel_type == SocketChannels.TASK_ROUTE:
+        return "task_route_%s" % route_id
