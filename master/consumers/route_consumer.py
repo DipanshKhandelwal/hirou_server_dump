@@ -27,8 +27,11 @@ class RouteConsumer(AsyncJsonWebsocketConsumer):
             await self.close()
 
     async def disconnect(self, code):
-        await self.channel_layer.group_discard(self.get_group_name(), self.channel_name)
+        group = self.get_group_name()
+        user = self.scope["user"]
+        await self.channel_layer.group_discard(group, self.channel_name)
         await self.send_json({'success': True})
+        RouteConsumer.present_users[group].pop(str(user.id), None)
         await self.close()
 
     async def websocket_ingest(self, event):
