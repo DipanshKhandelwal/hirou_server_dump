@@ -8,7 +8,7 @@ from .models import Vehicle, CollectionPoint, Garbage, ReportType, Customer, Bas
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 
-from master.consumers.helpers import send_update_to_socket
+from master.consumers.helpers import send_update_to_socket, get_channel_group_name
 from .consumers.constants import SocketEventTypes, SocketChannels, SocketSubEventTypes
 
 
@@ -54,16 +54,18 @@ class CollectionPointViewSet(viewsets.ModelViewSet):
                 serializer.save(sequence=1)
 
             data = BaseRouteListSerializer(route).data
-            send_update_to_socket(SocketEventTypes.COLLECTION_POINT, SocketSubEventTypes.CREATE,
-                                  SocketChannels.COLLECTION_POINT_CHANNEL, data)
+
+            channel = get_channel_group_name(SocketChannels.BASE_ROUTE, base_route_id)
+            send_update_to_socket(SocketEventTypes.COLLECTION_POINT, SocketSubEventTypes.CREATE, channel, data)
 
     def perform_update(self, serializer):
         instance = serializer.save(user=self.request.user)
         base_route = instance.route
 
         data = BaseRouteListSerializer(base_route).data
-        send_update_to_socket(SocketEventTypes.COLLECTION_POINT, SocketSubEventTypes.UPDATE,
-                              SocketChannels.COLLECTION_POINT_CHANNEL, data)
+
+        channel = get_channel_group_name(SocketChannels.BASE_ROUTE, base_route.id)
+        send_update_to_socket(SocketEventTypes.COLLECTION_POINT, SocketSubEventTypes.UPDATE, channel, data)
 
     def perform_destroy(self, instance):
         super().perform_destroy(instance)
@@ -74,8 +76,9 @@ class CollectionPointViewSet(viewsets.ModelViewSet):
             e.save()
 
         data = BaseRouteListSerializer(base_route).data
-        send_update_to_socket(SocketEventTypes.COLLECTION_POINT, SocketSubEventTypes.DELETE,
-                              SocketChannels.COLLECTION_POINT_CHANNEL, data)
+
+        channel = get_channel_group_name(SocketChannels.BASE_ROUTE, base_route.id)
+        send_update_to_socket(SocketEventTypes.COLLECTION_POINT, SocketSubEventTypes.DELETE, channel, data)
 
 
 class GarbageViewSet(viewsets.ModelViewSet):
@@ -157,8 +160,8 @@ class BaseRouteViewSet(viewsets.ModelViewSet):
 
         data = BaseRouteListSerializer(base_route).data
 
-        send_update_to_socket(SocketEventTypes.BASE_ROUTE, SocketSubEventTypes.REORDER,
-                              SocketChannels.COLLECTION_POINT_CHANNEL, data)
+        channel = get_channel_group_name(SocketChannels.BASE_ROUTE, base_route.id)
+        send_update_to_socket(SocketEventTypes.BASE_ROUTE, SocketSubEventTypes.REORDER, channel, data)
 
         return Response(BaseRouteListSerializer(base_route).data)
 
@@ -247,8 +250,9 @@ class TaskCollectionPointViewSet(viewsets.ModelViewSet):
             tc.save()
 
         data = TaskCollectionPointSerializer(task_c_p).data
-        send_update_to_socket(SocketEventTypes.TASK_COLLECTION_POINT, SocketSubEventTypes.BULK_COMPLETE,
-                              SocketChannels.TASK_COLLECTION_POINT_CHANNEL, data)
+
+        channel = get_channel_group_name(SocketChannels.TASK_ROUTE, task_c_p.route.id)
+        send_update_to_socket(SocketEventTypes.TASK_COLLECTION_POINT, SocketSubEventTypes.BULK_COMPLETE, channel, data)
 
         return Response(TaskCollectionSerializer(task_c_p.task_collection.all(), many=True).data)
 
@@ -264,8 +268,8 @@ class TaskCollectionViewSet(viewsets.ModelViewSet):
         instance = serializer.save(user=self.request.user)
         data = TaskCollectionPointSerializer(instance.collection_point).data
 
-        send_update_to_socket(SocketEventTypes.TASK_COLLECTION, SocketSubEventTypes.UPDATE,
-                              SocketChannels.TASK_COLLECTION_POINT_CHANNEL, data)
+        channel = get_channel_group_name(SocketChannels.TASK_ROUTE, instance.collection_point.route.id)
+        send_update_to_socket(SocketEventTypes.TASK_COLLECTION, SocketSubEventTypes.UPDATE, channel, data)
 
 
 class TaskReportViewSet(viewsets.ModelViewSet):
