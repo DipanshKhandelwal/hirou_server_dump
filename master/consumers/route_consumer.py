@@ -44,7 +44,26 @@ class RouteConsumer(AsyncJsonWebsocketConsumer):
 
             if event == SocketEventTypes.LOCATION and sub_event == SocketSubEventTypes.UPDATE and data:
                 user = self.scope["user"]
-                RouteConsumer.present_users[str(user.id)] = data['location']
+                group = self.get_group_name()
+
+                if RouteConsumer.present_users.get(group, 0) is 0:
+                    RouteConsumer.present_users[group] = {}
+
+                RouteConsumer.present_users[group][str(user.id)] = {
+                    "user": {
+                        "id": user.id,
+                        "name": user.username
+                    },
+                    "location": data['location']
+                }
+
+                await self.channel_layer.group_send(group, {
+                    'type': 'locations.update',
+                    'data': {
+                        SocketKeys.EVENT: SocketEventTypes.LOCATION,
+                        SocketKeys.SUB_EVENT: SocketSubEventTypes.UPDATE,
+                        SocketKeys.DATA: list(RouteConsumer.present_users[group].values()),
+                    }
+                })
         except:
-            print("error")
             pass
