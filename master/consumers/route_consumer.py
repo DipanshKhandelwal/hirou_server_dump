@@ -63,10 +63,8 @@ class RouteConsumer(AsyncJsonWebsocketConsumer):
                     RouteConsumer.present_users[group] = {}
 
                 RouteConsumer.present_users[group][str(user.id)] = {
-                    "user": {
-                        "id": user.id,
-                        "name": user.username
-                    },
+                    "id": user.id,
+                    "name": user.username,
                     "location": data['location']
                 }
 
