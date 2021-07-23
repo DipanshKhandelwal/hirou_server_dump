@@ -72,7 +72,18 @@ class TaskRouteAdmin(admin.ModelAdmin):
 
 
 class TaskReportAdmin(admin.ModelAdmin):
-    list_display = ['timestamp', 'report_type', 'task_collection_point', 'route', 'image', 'description']
+
+    def get_google_link(self, obj):
+        if obj.task_collection_point:
+            tcp = obj.task_collection_point
+            link = f"http://www.google.com/maps/place/{tcp.location}"
+            if tcp:
+                return link
+        return 'N/A'
+
+    get_google_link.short_description = 'Map link'
+
+    list_display = ['timestamp', 'report_type', 'task_collection_point', 'route', 'image', 'description', 'get_google_link']
     ordering = ['timestamp', 'report_type', 'task_collection_point', 'route', 'image', 'description']
 
 
