@@ -148,7 +148,7 @@ class BaseRouteViewSet(viewsets.ModelViewSet):
 
         return Response(BaseRouteSerializer(new_base_route).data)
 
-    @action(detail=True, methods=['patch'])
+    @action(detail=True, methods=['patch', 'post'])
     def reorder_points(self, request, pk=None):
         base_route = self.get_object()
         points = self.request.data["points"]
