@@ -228,7 +228,7 @@ class TaskCollectionPointViewSet(viewsets.ModelViewSet):
     serializer_class = TaskCollectionPointSerializer
     queryset = TaskCollectionPoint.objects.all()
 
-    @action(detail=True, methods=['patch'])
+    @action(detail=True, methods=['patch', 'post'])
     def bulk_complete(self, request, pk=None):
         task_c_p = self.get_object()
         complete = True
