@@ -127,6 +127,20 @@ class TaskRouteSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'customer', 'garbage', 'date', 'task_collection_point', 'base_route_name']
 
 
+class TaskRouteListSerializer(serializers.ModelSerializer):
+    customer = CustomerSerializer(read_only=True)
+    garbage = GarbageSerializer(read_only=True, many=True)
+    task_collection_point = serializers.SerializerMethodField('get_empty_tcp_list')
+
+    @staticmethod
+    def get_empty_tcp_list(obj):
+        return []
+
+    class Meta:
+        model = TaskRoute
+        fields = ['id', 'name', 'customer', 'garbage', 'date', 'task_collection_point', 'base_route_name']
+
+
 class TaskReportSerializer(serializers.ModelSerializer):
     timestamp = serializers.SerializerMethodField()
 

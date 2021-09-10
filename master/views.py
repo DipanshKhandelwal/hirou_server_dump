@@ -3,7 +3,7 @@ from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
 
-from .serializers import VehicleSerializer, CollectionPointSerializer, GarbageSerializer, CustomerSerializer, BaseRouteSerializer, BaseRouteListSerializer, TaskRouteSerializer, TaskCollectionPointSerializer, TaskCollectionSerializer, ReportTypeSerializer, TaskReportSerializer, TaskReportListSerializer, TaskAmountSerializer, TaskAmountListSerializer
+from .serializers import VehicleSerializer, CollectionPointSerializer, GarbageSerializer, CustomerSerializer, BaseRouteSerializer, BaseRouteListSerializer, TaskRouteSerializer, TaskRouteListSerializer, TaskCollectionPointSerializer, TaskCollectionSerializer, ReportTypeSerializer, TaskReportSerializer, TaskReportListSerializer, TaskAmountSerializer, TaskAmountListSerializer
 from .models import Vehicle, CollectionPoint, Garbage, ReportType, Customer, BaseRoute, TaskRoute, TaskCollectionPoint, TaskCollection, TaskReport, TaskAmount
 from rest_framework.response import Response
 from django.contrib.auth.models import User
@@ -171,8 +171,20 @@ class TaskRouteViewSet(viewsets.ModelViewSet):
     """
     A viewset for viewing and editing task route instances.
     """
-    serializer_class = TaskRouteSerializer
+    # serializer_class = TaskRouteSerializer
     queryset = TaskRoute.objects.all()
+
+    # def get_serializer_class(self):
+    #     if self.action == 'list':
+    #         return TaskRouteListSerializer
+
+    def get_serializer_class(self):
+        type = self.request.query_params.get('type', None)
+
+        if type and type == 'list':
+            return TaskRouteListSerializer
+
+        return TaskRouteSerializer
 
     def get_queryset(self):
         queryset = TaskRoute.objects.all()
