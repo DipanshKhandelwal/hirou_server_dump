@@ -51,6 +51,20 @@ class BaseRouteListSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'customer', 'collection_point', 'garbage']
 
 
+class BaseRouteNameListSerializer(serializers.ModelSerializer):
+    garbage = GarbageSerializer(read_only=True, many=True)
+    customer = CustomerSerializer(read_only=True)
+    collection_point = serializers.SerializerMethodField('get_empty_tcp_list')
+
+    @staticmethod
+    def get_empty_tcp_list(obj):
+        return []
+
+    class Meta:
+        model = BaseRoute
+        fields = ['id', 'name', 'customer', 'collection_point', 'garbage']
+
+
 class BaseRouteSerializer(serializers.ModelSerializer):
     # collection_point = serializers.HyperlinkedRelatedField(read_only=True, many=True, view_name='collection_point-detail')
     # collection_point = serializers.PrimaryKeyRelatedField(read_only=True, many=True)
