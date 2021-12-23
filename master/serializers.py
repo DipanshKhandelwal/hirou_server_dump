@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import Vehicle, CollectionPoint, Garbage, ReportType, Customer, BaseRoute, TaskRoute, TaskCollectionPoint, TaskCollection, TaskReport, TaskAmount
+from .models import Vehicle, CollectionPoint, Garbage, ReportType, Customer, BaseRoute, TaskRoute, TaskCollectionPoint,\
+    TaskCollection, TaskReport, TaskAmount, TaskAmountItem
 from users.serializers import UserSerializer
 from django.utils import timezone
 
@@ -183,6 +184,22 @@ class TaskReportListSerializer(serializers.ModelSerializer):
         model = TaskReport
         fields = ['id', 'route', 'timestamp', 'task_collection_point', 'report_type', 'image', 'description']
 
+
+class TaskAmountItemListSerializer(serializers.ModelSerializer):
+    garbage = GarbageSerializer(read_only=True)
+
+    class Meta:
+        model = TaskAmountItem
+        read_only_fields = ['id']
+        fields = ['id', 'task_amount', 'gross_weight', 'vehicle_weight', 'garbage', 'net_weight']
+
+
+class TaskAmountItemSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = TaskAmountItem
+        read_only_fields = ['id', 'net_weight']
+        fields = ['id', 'task_amount', 'gross_weight', 'vehicle_weight', 'garbage', 'net_weight']
 
 
 class TaskAmountListSerializer(serializers.ModelSerializer):
