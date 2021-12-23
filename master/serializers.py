@@ -203,8 +203,15 @@ class TaskAmountListSerializer(serializers.ModelSerializer):
 
 
 class TaskAmountSerializer(serializers.ModelSerializer):
+    timestamp = serializers.SerializerMethodField()
+
+    @staticmethod
+    def get_timestamp(obj):
+        if obj.timestamp is None:
+            return None
+        return obj.timestamp.ctime()
 
     class Meta:
         model = TaskAmount
         read_only_fields = ['id', 'user', 'timestamp']
-        fields = ['id', 'route', 'garbage', 'amount', 'user', 'timestamp', 'memo', 'vehicle']
+        fields = ['id', 'route', 'user', 'timestamp', 'memo', 'vehicle', 'work_type', 'deal_type']
