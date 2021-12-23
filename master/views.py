@@ -350,7 +350,7 @@ class TaskAmountViewSet(viewsets.ModelViewSet):
         return queryset
     
     def get_serializer_class(self):
-        if self.action == 'list':
+        if self.action == 'list' or self.action == 'retrieve':
             return TaskAmountListSerializer
 
         return TaskAmountSerializer
