@@ -210,3 +210,22 @@ class TaskAmount(models.Model):
 
     def __str__(self):
         return self.route.name + self.garbage.name + str(self.amount)
+
+class TaskAmountItem(models.Model):
+    task_amount = models.ForeignKey(to=TaskAmount, verbose_name=_('task_amount'), on_delete=models.SET_NULL, null=True, related_name='amount_item')
+    gross_weight = models.IntegerField(default=0)
+    vehicle_weight = models.IntegerField(default=0)
+    garbage = models.ForeignKey(to=Garbage, verbose_name=_('garbage'), on_delete=models.SET_NULL, null=True, related_name='amount_item')
+
+    def _get_net_weight(self):
+        return self.gross_weight - self.vehicle_weight
+
+    net_weight = property(_get_net_weight)
+
+    class Meta:
+        verbose_name = _('TaskAmountItem')
+        verbose_name_plural = _('TaskAmountItems')
+
+    def __str__(self):
+        return str(self.id)
+
