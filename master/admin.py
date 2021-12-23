@@ -3,7 +3,8 @@ import csv
 from django.contrib import admin
 from django.http import HttpResponse
 
-from .models import Vehicle, Garbage, ReportType, CollectionPoint, Customer, BaseRoute, TaskRoute, TaskCollectionPoint, TaskCollection, TaskReport, TaskAmount
+from .models import Vehicle, Garbage, ReportType, CollectionPoint, Customer, BaseRoute, TaskRoute, TaskCollectionPoint,\
+    TaskCollection, TaskReport, TaskAmount, TaskAmountItem
 
 
 class VehicleAdmin(admin.ModelAdmin):
@@ -88,8 +89,14 @@ class TaskReportAdmin(admin.ModelAdmin):
 
 
 class TaskAmountAdmin(admin.ModelAdmin):
-    list_display = ['timestamp', 'route', 'garbage', 'amount', 'user', 'vehicle', 'memo']
-    ordering = ['timestamp', 'route', 'garbage', 'amount', 'user', 'vehicle', 'memo']
+    list_display = ['timestamp', 'route', 'vehicle']
+    ordering = ['timestamp', 'route', 'vehicle']
+
+
+class TaskAmountItemAdmin(admin.ModelAdmin):
+    readonly_fields = ['net_weight']
+    list_display = ['task_amount', 'net_weight', 'gross_weight', 'vehicle_weight', 'garbage']
+    ordering = ['task_amount', 'gross_weight', 'vehicle_weight', 'garbage']
 
 
 admin.site.register(Vehicle, VehicleAdmin)
@@ -98,9 +105,9 @@ admin.site.register(Garbage, GarbageAdmin)
 admin.site.register(ReportType, ReportTypeAdmin)
 admin.site.register(Customer, CustomerAdmin)
 admin.site.register(BaseRoute, BaseRouteAdmin)
-
 admin.site.register(TaskCollection, TaskCollectionAdmin)
 admin.site.register(TaskCollectionPoint, TaskCollectionPointAdmin)
 admin.site.register(TaskRoute, TaskRouteAdmin)
 admin.site.register(TaskReport, TaskReportAdmin)
 admin.site.register(TaskAmount, TaskAmountAdmin)
+admin.site.register(TaskAmountItem, TaskAmountItemAdmin)
