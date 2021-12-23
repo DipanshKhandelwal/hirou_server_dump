@@ -184,11 +184,12 @@ class TaskReportListSerializer(serializers.ModelSerializer):
         fields = ['id', 'route', 'timestamp', 'task_collection_point', 'report_type', 'image', 'description']
 
 
+
 class TaskAmountListSerializer(serializers.ModelSerializer):
-    garbage = GarbageSerializer(read_only=True)
     vehicle = VehicleSerializer(read_only=True)
     user = UserSerializer(read_only=True)
     timestamp = serializers.SerializerMethodField()
+    amount_item = TaskAmountItemListSerializer(read_only=True, many=True)
 
     @staticmethod
     def get_timestamp(obj):
@@ -199,7 +200,7 @@ class TaskAmountListSerializer(serializers.ModelSerializer):
     class Meta:
         model = TaskAmount
         read_only_fields = ['id', 'user', 'timestamp']
-        fields = ['id', 'route', 'garbage', 'amount', 'user', 'timestamp', 'memo', 'vehicle']
+        fields = ['id', 'route', 'user', 'amount_item', 'timestamp', 'memo', 'vehicle', 'work_type', 'deal_type']
 
 
 class TaskAmountSerializer(serializers.ModelSerializer):
