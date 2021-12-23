@@ -7,7 +7,7 @@ from django.utils import timezone
 class GarbageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Garbage
-        fields = ['id', 'name', 'description', 'route']
+        fields = ['id', 'name', 'description']
 
 
 class ReportTypeSerializer(serializers.ModelSerializer):
