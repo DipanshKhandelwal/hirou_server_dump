@@ -3,8 +3,8 @@ from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
 
-from .serializers import VehicleSerializer, CollectionPointSerializer, GarbageSerializer, CustomerSerializer, BaseRouteSerializer, BaseRouteNameListSerializer, BaseRouteListSerializer, TaskRouteSerializer, TaskRouteListSerializer, TaskCollectionPointSerializer, TaskCollectionSerializer, ReportTypeSerializer, TaskReportSerializer, TaskReportListSerializer, TaskAmountSerializer, TaskAmountListSerializer
-from .models import Vehicle, CollectionPoint, Garbage, ReportType, Customer, BaseRoute, TaskRoute, TaskCollectionPoint, TaskCollection, TaskReport, TaskAmount
+from .serializers import VehicleSerializer, CollectionPointSerializer, GarbageSerializer, CustomerSerializer, BaseRouteSerializer, BaseRouteNameListSerializer, BaseRouteListSerializer, TaskRouteSerializer, TaskRouteListSerializer, TaskCollectionPointSerializer, TaskCollectionSerializer, ReportTypeSerializer, TaskReportSerializer, TaskReportListSerializer, TaskAmountSerializer, TaskAmountListSerializer, TaskAmountItemSerializer, TaskAmountItemListSerializer
+from .models import Vehicle, CollectionPoint, Garbage, ReportType, Customer, BaseRoute, TaskRoute, TaskCollectionPoint, TaskCollection, TaskReport, TaskAmount, TaskAmountItem
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 
@@ -354,3 +354,16 @@ class TaskAmountViewSet(viewsets.ModelViewSet):
             return TaskAmountListSerializer
 
         return TaskAmountSerializer
+
+
+class TaskAmountItemViewSet(viewsets.ModelViewSet):
+    """
+    A viewset for viewing and editing task collection instances.
+    """
+    queryset = TaskAmountItem.objects.all()
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return TaskAmountItemListSerializer
+
+        return TaskAmountItemSerializer
