@@ -191,13 +191,13 @@ def task_report_saved(sender, instance, created, **kwargs):
 
 
 class TaskAmount(models.Model):
-    route = models.ForeignKey(to=TaskRoute, verbose_name=_('route'), on_delete=models.SET_NULL, null=True, related_name='amount')
+    route = models.ForeignKey(to=TaskRoute, on_delete=models.SET_NULL, null=True, related_name='amount')
     vehicle = models.ForeignKey(to=Vehicle, on_delete=models.SET_NULL, related_name='amount', null=True, verbose_name=_('vehicle'), blank=True)
-    garbage = models.ForeignKey(to=Garbage, verbose_name=_('garbage'), on_delete=models.SET_NULL, null=True, related_name='amount')
-    amount = models.IntegerField(default=0)
     user = models.ForeignKey(to=User, verbose_name=_('user'), on_delete=models.SET_NULL, null=True, related_name='amount', blank=True, default=None)
     timestamp = models.DateTimeField(verbose_name=_('timestamp'), null=True)
     memo = models.CharField(max_length=200, blank=True, verbose_name=_('memo'))
+    work_type = models.CharField(max_length=100, blank=True, verbose_name=_('Work Type'), default="")
+    deal_type = models.CharField(max_length=100, blank=True, verbose_name=_('Deal Type'), default="")
 
     def save(self, *args, **kwargs):
         if not self.id:
@@ -209,7 +209,7 @@ class TaskAmount(models.Model):
         verbose_name_plural = _('TaskAmounts')
 
     def __str__(self):
-        return self.route.name + self.garbage.name + str(self.amount)
+        return str(self.id)
 
 class TaskAmountItem(models.Model):
     task_amount = models.ForeignKey(to=TaskAmount, verbose_name=_('task_amount'), on_delete=models.SET_NULL, null=True, related_name='amount_item')
