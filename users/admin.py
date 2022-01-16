@@ -1,5 +1,4 @@
 from django.contrib import admin
-from django.contrib.auth.models import Group
 from .models import Profile
 
 
@@ -13,5 +12,4 @@ class ProfileAdmin(admin.ModelAdmin):
     actions = [deactivate_selected_users]
 
 
-admin.site.unregister(Group)
 admin.site.register(Profile, ProfileAdmin)
