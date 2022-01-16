@@ -6,17 +6,25 @@ from django.core.validators import RegexValidator
 from .models import User, Profile
 from master.models import Vehicle
 from rest_framework.authtoken.models import Token
+from django.contrib.auth.models import Group
+
+
+class GroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Group
+        fields = ['name']
 
 
 class UserSerializer(serializers.ModelSerializer):
     # vehicle = serializers.HyperlinkedRelatedField(many=True, read_only=True, view_name='vehicle-detail')
     profile = serializers.HyperlinkedRelatedField(many=False, read_only=True, view_name='profile-detail')
+    groups = GroupSerializer(many=True)
 
     class Meta:
         model = User
         read_only_fields = ['id']
         # fields = ['id', 'email', 'username', 'phone_number', 'first_name', 'last_name', 'profile', 'vehicle']
-        fields = ['id', 'email', 'username', 'first_name', 'last_name', 'profile']
+        fields = ['id', 'email', 'username', 'first_name', 'last_name', 'profile', 'groups']
 
 
 class ProfileSerializer(serializers.ModelSerializer):
