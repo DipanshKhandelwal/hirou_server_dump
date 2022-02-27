@@ -1,10 +1,17 @@
+import csv
+
 from django.utils import timezone
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, serializers
 from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
 
-from .serializers import VehicleSerializer, CollectionPointSerializer, GarbageSerializer, CustomerSerializer, BaseRouteSerializer, BaseRouteNameListSerializer, BaseRouteListSerializer, TaskRouteSerializer, TaskRouteListSerializer, TaskCollectionPointSerializer, TaskCollectionSerializer, ReportTypeSerializer, TaskReportSerializer, TaskReportListSerializer, TaskAmountSerializer, TaskAmountListSerializer, TaskAmountItemSerializer, TaskAmountItemListSerializer
-from .models import Vehicle, CollectionPoint, Garbage, ReportType, Customer, BaseRoute, TaskRoute, TaskCollectionPoint, TaskCollection, TaskReport, TaskAmount, TaskAmountItem
+from .serializers import VehicleSerializer, CollectionPointSerializer, GarbageSerializer, CustomerSerializer, \
+    BaseRouteSerializer, BaseRouteNameListSerializer, BaseRouteListSerializer, TaskRouteSerializer, \
+    TaskRouteListSerializer, TaskCollectionPointSerializer, TaskCollectionSerializer, ReportTypeSerializer, \
+    TaskReportSerializer, TaskReportListSerializer, TaskAmountSerializer, TaskAmountListSerializer, \
+    TaskAmountItemSerializer, TaskAmountItemListSerializer
+from .models import Vehicle, CollectionPoint, Garbage, ReportType, Customer, BaseRoute, TaskRoute, TaskCollectionPoint, \
+    TaskCollection, TaskReport, TaskAmount, TaskAmountItem
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 
@@ -49,7 +56,7 @@ class CollectionPointViewSet(viewsets.ModelViewSet):
             collection_points = route.collection_point.all()
             if len(collection_points) > 0:
                 last_cp = max(collection_points, key=lambda x: int(x.sequence))
-                serializer.save(sequence=last_cp.sequence+1)
+                serializer.save(sequence=last_cp.sequence + 1)
             else:
                 serializer.save(sequence=1)
 
@@ -72,7 +79,7 @@ class CollectionPointViewSet(viewsets.ModelViewSet):
         base_route = instance.route
         collection_points = base_route.collection_point.all()
         for i, e in enumerate(sorted(collection_points, key=lambda x: x.sequence)):
-            e.sequence = i+1
+            e.sequence = i + 1
             e.save()
 
         data = BaseRouteListSerializer(base_route).data
@@ -125,12 +132,61 @@ class BaseRouteViewSet(viewsets.ModelViewSet):
             return BaseRouteListSerializer
 
         return BaseRouteSerializer
-    
+
+    @action(detail=False, methods=['post'])
+    def create_csv(self, request):
+        try:
+            try:
+                file = self.request.FILES['csv']
+                decoded_file = file.read().decode('utf-8').splitlines()
+                reader = csv.DictReader(decoded_file)
+            except Exception as e:
+                raise serializers.ValidationError("File named csv is a required field")
+
+            try:
+                name = self.request.data['name'].strip()
+            except Exception as e:
+                raise serializers.ValidationError("Name is a required field")
+
+            try:
+                new_route = BaseRoute(name=name)
+                new_route.save()
+
+                if self.request.data['customer']:
+                    new_route.customer_id = self.request.data['customer']
+
+                if self.request.data['garbage']:
+                    garbages = self.request.data['garbage']
+                    for idx, gbg in enumerate(garbages.split(',')):
+                        new_route.garbage.add(gbg)
+
+                new_route.save()
+            except Exception as e:
+                raise serializers.ValidationError("Error in base route data")
+
+            try:
+                collection_points_list = []
+                for idx, row in enumerate(reader):
+                    data = dict(row)
+                    location = data['longitude'].strip()+","+data['latitude'].strip()
+                    new_collection_point = CollectionPoint(route=new_route, name=data['name'].strip(), sequence=idx+1, memo=data['memo'].strip(), location=location)
+                    collection_points_list.append(new_collection_point)
+
+                CollectionPoint.objects.bulk_create(collection_points_list)
+                new_route.save()
+
+            except Exception as e:
+                raise serializers.ValidationError("Error parsing csv")
+
+            return Response(data={"success": True}, status=200)
+        except Exception as e:
+            return Response(data={"success": False, "message": str(e.args[0])}, status=400)
+
     @action(detail=True, methods=['post'])
     def copy(self, request, pk=None):
         base_route = self.get_object()
 
-        new_base_route = BaseRoute(name=base_route.name + ' のコピー', customer = base_route.customer)
+        new_base_route = BaseRoute(name=base_route.name + ' のコピー', customer=base_route.customer)
         new_base_route.save()
 
         garbages = base_route.garbage.all()
@@ -160,7 +216,7 @@ class BaseRouteViewSet(viewsets.ModelViewSet):
 
         for i, e in enumerate(points):
             cp = CollectionPoint.objects.get(pk=e)
-            cp.sequence = i+1
+            cp.sequence = i + 1
             cp.save()
 
         data = BaseRouteListSerializer(base_route).data
