@@ -1,11 +1,8 @@
-import requests
 from django.db import models
 from django.utils import timezone
 from location_field.models.plain import PlainLocationField
 from users.models import User
 from django.utils.translation import gettext_lazy as _
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 
 
 class Vehicle(models.Model):
@@ -165,30 +162,6 @@ class TaskReport(models.Model):
 
     def __str__(self):
         return str(self.timestamp)
-
-
-def send_chatwork_notification(message, read):
-    payload = {"body": message, "self_unread": read}
-    headers = {'X-ChatWorkToken': '36df5b65d2584e27e28b3b3e16609fdd'}
-    requests.post("https://api.chatwork.com/v2/rooms/200390378/messages", data=payload, headers=headers)
-
-
-@receiver(post_save, sender=TaskReport, dispatch_uid="task_report_saved")
-def task_report_saved(sender, instance, created, **kwargs):
-    status = ""
-    if created:
-        status = "Report Created : "
-    else:
-        status = "Report Updated : "
-
-    date = "\nDate :" + instance.timestamp.ctime()
-    base_route_name = "\nTask Route : " + instance.route.name
-    collection_point_name = "\nCollection Point : " + instance.task_collection_point.name
-    report_type = "\nReport Type : " + instance.report_type.name
-    description = "\nDescription : " + instance.description
-
-    message = status + date + base_route_name + collection_point_name + report_type + description
-    send_chatwork_notification(message, 1)
 
 
 class TaskAmount(models.Model):
