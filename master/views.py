@@ -282,11 +282,21 @@ class TaskCollectionViewSet(viewsets.ModelViewSet):
     queryset = TaskCollection.objects.all()
 
     def perform_update(self, serializer):
-        instance = serializer.save(user=self.request.user)
-        data = TaskCollectionPointSerializer(instance.collection_point).data
+        try:
+            user_id = self.request.user.id
+            serializer.is_valid(raise_exception=True)
+            if user_id:
+                user = User.objects.get(id=user_id)
+                instance = serializer.save(users=user)
+                data = TaskCollectionPointSerializer(instance.collection_point).data
 
-        channel = get_channel_group_name(SocketChannels.TASK_ROUTE, instance.collection_point.route.id)
-        send_update_to_socket(SocketEventTypes.TASK_COLLECTION, SocketSubEventTypes.UPDATE, channel, data)
+                channel = get_channel_group_name(SocketChannels.TASK_ROUTE, instance.collection_point.route.id)
+                send_update_to_socket(SocketEventTypes.TASK_COLLECTION, SocketSubEventTypes.UPDATE, channel, data)
+            else:
+                serializer.save()
+        except ValidationError:
+            return Response({"errors": (serializer.errors,)},
+                            status=status.HTTP_400_BAD_REQUEST)
 
 
 class TaskReportViewSet(viewsets.ModelViewSet):
