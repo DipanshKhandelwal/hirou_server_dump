@@ -82,6 +82,7 @@ class BaseRouteSerializer(serializers.ModelSerializer):
 class TaskCollectionSerializer(serializers.ModelSerializer):
     garbage = GarbageSerializer(read_only=True)
     timestamp = serializers.SerializerMethodField()
+    users = UserSerializer(read_only=True)
 
     @staticmethod
     def get_timestamp(obj):
@@ -91,6 +92,7 @@ class TaskCollectionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TaskCollection
+        read_only_fields = ['id', 'users', 'timestamp']
         fields = ['id', 'collection_point', 'timestamp', 'complete', 'amount', 'image', 'users', 'vehicle', 'garbage', 'available']
 
     def update(self, instance, validated_data):
