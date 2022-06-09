@@ -114,6 +114,7 @@ class TaskCollectionSerializer(serializers.ModelSerializer):
 class TaskCollectionListSerializer(serializers.ModelSerializer):
     garbage = GarbageSerializer(read_only=True)
     timestamp = serializers.SerializerMethodField()
+    users = UserSerializer(read_only=True)
 
     @staticmethod
     def get_timestamp(obj):

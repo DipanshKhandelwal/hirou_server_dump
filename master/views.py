@@ -53,7 +53,7 @@ class CollectionPointViewSet(viewsets.ModelViewSet):
             else:
                 serializer.save(sequence=1)
 
-            data = BaseRouteListSerializer(route).data
+            data = BaseRouteListSerializer(route, context={'request': self.request}).data
 
             channel = get_channel_group_name(SocketChannels.BASE_ROUTE, base_route_id)
             send_update_to_socket(SocketEventTypes.COLLECTION_POINT, SocketSubEventTypes.CREATE, channel, data)
@@ -62,7 +62,7 @@ class CollectionPointViewSet(viewsets.ModelViewSet):
         instance = serializer.save(user=self.request.user)
         base_route = instance.route
 
-        data = BaseRouteListSerializer(base_route).data
+        data = BaseRouteListSerializer(base_route, context={'request': self.request}).data
 
         channel = get_channel_group_name(SocketChannels.BASE_ROUTE, base_route.id)
         send_update_to_socket(SocketEventTypes.COLLECTION_POINT, SocketSubEventTypes.UPDATE, channel, data)
@@ -75,7 +75,7 @@ class CollectionPointViewSet(viewsets.ModelViewSet):
             e.sequence = i+1
             e.save()
 
-        data = BaseRouteListSerializer(base_route).data
+        data = BaseRouteListSerializer(base_route, context={'request': self.request}).data
 
         channel = get_channel_group_name(SocketChannels.BASE_ROUTE, base_route.id)
         send_update_to_socket(SocketEventTypes.COLLECTION_POINT, SocketSubEventTypes.DELETE, channel, data)
@@ -151,7 +151,7 @@ class BaseRouteViewSet(viewsets.ModelViewSet):
 
         new_base_route.save()
 
-        return Response(BaseRouteSerializer(new_base_route).data)
+        return Response(BaseRouteSerializer(new_base_route, context={'request': self.request}).data)
 
     @action(detail=True, methods=['patch', 'post'])
     def reorder_points(self, request, pk=None):
@@ -163,12 +163,12 @@ class BaseRouteViewSet(viewsets.ModelViewSet):
             cp.sequence = i+1
             cp.save()
 
-        data = BaseRouteListSerializer(base_route).data
+        data = BaseRouteListSerializer(base_route, context={'request': self.request}).data
 
         channel = get_channel_group_name(SocketChannels.BASE_ROUTE, base_route.id)
         send_update_to_socket(SocketEventTypes.BASE_ROUTE, SocketSubEventTypes.REORDER, channel, data)
 
-        return Response(BaseRouteListSerializer(base_route).data)
+        return Response(BaseRouteListSerializer(base_route, context={'request': self.request}).data)
 
 
 # 
@@ -266,12 +266,12 @@ class TaskCollectionPointViewSet(viewsets.ModelViewSet):
 
             tc.save()
 
-        data = TaskCollectionPointSerializer(task_c_p).data
+        data = TaskCollectionPointSerializer(task_c_p, context={'request': self.request}).data
 
         channel = get_channel_group_name(SocketChannels.TASK_ROUTE, task_c_p.route.id)
         send_update_to_socket(SocketEventTypes.TASK_COLLECTION_POINT, SocketSubEventTypes.BULK_COMPLETE, channel, data)
 
-        return Response(TaskCollectionSerializer(task_c_p.task_collection.all(), many=True).data)
+        return Response(TaskCollectionSerializer(task_c_p.task_collection.all(), many=True, context={'request': self.request}).data)
 
 
 class TaskCollectionViewSet(viewsets.ModelViewSet):
@@ -288,7 +288,7 @@ class TaskCollectionViewSet(viewsets.ModelViewSet):
             if user_id:
                 user = User.objects.get(id=user_id)
                 instance = serializer.save(users=user)
-                data = TaskCollectionPointSerializer(instance.collection_point).data
+                data = TaskCollectionPointSerializer(instance.collection_point, context={'request': self.request}).data
 
                 channel = get_channel_group_name(SocketChannels.TASK_ROUTE, instance.collection_point.route.id)
                 send_update_to_socket(SocketEventTypes.TASK_COLLECTION, SocketSubEventTypes.UPDATE, channel, data)
