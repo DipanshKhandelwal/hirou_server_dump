@@ -52,6 +52,12 @@ class BaseRouteListSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'customer', 'collection_point', 'garbage']
 
 
+class BaseRouteNameIdSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BaseRoute
+        fields = ['id', 'name']
+
+
 class BaseRouteNameListSerializer(serializers.ModelSerializer):
     garbage = GarbageSerializer(read_only=True, many=True)
     customer = CustomerSerializer(read_only=True)
@@ -139,16 +145,32 @@ class TaskRouteSerializer(serializers.ModelSerializer):
     task_collection_point = TaskCollectionPointSerializer(read_only=True, many=True)
     customer = CustomerSerializer(read_only=True)
     garbage = GarbageSerializer(read_only=True, many=True)
+    base_route = BaseRouteNameIdSerializer(read_only=True)
+    # base_route_name = serializers.SerializerMethodField('get_base_route_name')
+    #
+    # @staticmethod
+    # def get_base_route_name(obj):
+    #     if obj.base_route is None:
+    #         return ""
+    #     return obj.base_route.name
 
     class Meta:
         model = TaskRoute
-        fields = ['id', 'name', 'customer', 'garbage', 'date', 'task_collection_point', 'base_route_name']
+        fields = ['id', 'name', 'customer', 'garbage', 'date', 'task_collection_point', 'base_route', 'base_route_name']
 
 
 class TaskRouteListSerializer(serializers.ModelSerializer):
     customer = CustomerSerializer(read_only=True)
     garbage = GarbageSerializer(read_only=True, many=True)
     task_collection_point = serializers.SerializerMethodField('get_empty_tcp_list')
+    base_route = BaseRouteNameIdSerializer(read_only=True)
+    # base_route_name = serializers.SerializerMethodField('get_base_route_name')
+    #
+    # @staticmethod
+    # def get_base_route_name(obj):
+    #     if obj.base_route is None:
+    #         return ""
+    #     return obj.base_route.name
 
     @staticmethod
     def get_empty_tcp_list(obj):
@@ -156,7 +178,7 @@ class TaskRouteListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TaskRoute
-        fields = ['id', 'name', 'customer', 'garbage', 'date', 'task_collection_point', 'base_route_name']
+        fields = ['id', 'name', 'customer', 'garbage', 'date', 'task_collection_point', 'base_route', 'base_route_name']
 
 
 class TaskReportSerializer(serializers.ModelSerializer):

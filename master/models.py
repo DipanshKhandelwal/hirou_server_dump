@@ -89,6 +89,7 @@ class TaskRoute(models.Model):
     date = models.DateField()
     name = models.CharField(max_length=100, verbose_name=_('name'))
     base_route_name = models.CharField(max_length=80, verbose_name=_('base_route_name'), default='', blank=True)
+    base_route = models.ForeignKey(to=BaseRoute, verbose_name=_('base_route'), on_delete=models.SET_NULL, null=True, related_name='task_route')
     customer = models.ForeignKey(to=Customer, verbose_name=_('customer'), on_delete=models.SET_NULL, null=True, related_name='task_route')
     garbage = models.ManyToManyField(to=Garbage, verbose_name=_('garbage'), blank=True, related_name='task_route',)
     vehicle = models.ForeignKey(to=Vehicle, on_delete=models.SET_NULL, related_name='task_route', null=True, verbose_name=_('vehicle'))
@@ -184,6 +185,7 @@ class TaskAmount(models.Model):
 
     def __str__(self):
         return str(self.id)
+
 
 class TaskAmountItem(models.Model):
     task_amount = models.ForeignKey(to=TaskAmount, verbose_name=_('task_amount'), on_delete=models.SET_NULL, null=True, related_name='amount_item')
