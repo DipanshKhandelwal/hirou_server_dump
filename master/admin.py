@@ -2,6 +2,7 @@ import csv
 
 from django.contrib import admin
 from django.http import HttpResponse
+from django.utils.html import mark_safe
 
 from .models import Vehicle, Garbage, ReportType, CollectionPoint, Customer, BaseRoute, TaskRoute, TaskCollectionPoint,\
     TaskCollection, TaskReport, TaskAmount, TaskAmountItem
@@ -79,6 +80,7 @@ class TaskReportAdmin(admin.ModelAdmin):
             tcp = obj.task_collection_point
             link = f"http://www.google.com/maps/place/{tcp.location}"
             if tcp:
+                # return mark_safe('<a href="%s" target="_blank" >map ></a>'%(link))
                 return link
         return 'N/A'
 

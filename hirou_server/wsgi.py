@@ -11,6 +11,7 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'hirou_server.settings.production')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'hirou_server.settings.development')
+# os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'hirou_server.settings.production')
 
 application = get_wsgi_application()

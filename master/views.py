@@ -362,6 +362,20 @@ class TaskReportViewSet(viewsets.ModelViewSet):
     """
     queryset = TaskReport.objects.all()
 
+    # def perform_create(self, serializer):
+    #     serializer.save(user=self.request.user)
+    # data = self.request.query_params.get('notifications', [])
+    # print("data create", data)
+
+    # def perform_update(self, serializer):
+    #     serializer.save(user=self.request.user)
+    # data = self.request.query_params.get('notifications', [])
+    # print("data update", data)
+    # if "email" in data:
+    #     print("email")
+    # if "chatwork" in data:
+    #     print("chatwork")
+
     def get_queryset(self):
         queryset = TaskReport.objects.all()
         task_route = self.request.query_params.get('task_route', None)

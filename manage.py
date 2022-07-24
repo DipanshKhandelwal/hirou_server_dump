@@ -5,7 +5,8 @@ import sys
 
 
 def main():
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'hirou_server.settings.production')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'hirou_server.settings.development')
+    # os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'hirou_server.settings.production')
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:

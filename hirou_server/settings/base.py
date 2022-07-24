@@ -121,7 +121,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en'
 
-TIME_ZONE = 'Asia/Kolkata'
+TIME_ZONE = 'Asia/Tokyo'
 
 LOCALE_PATHS = [os.path.join(BASE_DIR, '../locale')]
 
